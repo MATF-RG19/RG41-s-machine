@@ -1,6 +1,6 @@
 #include <iostream>
 #include<GL/glut.h>
-#include "drawFunction.h"
+#include "drawFunction.cpp"
 using namespace std;
 
 static float window_width=0, window_height=0;
@@ -73,7 +73,7 @@ void on_display() {
     glEnd();
 
 
-    drawMen();
+    drawMan();
     drawSlotMachine();
     glutSwapBuffers();
     
