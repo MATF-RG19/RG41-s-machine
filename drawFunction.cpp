@@ -3,7 +3,7 @@
 
 void drawMan() {
     glScalef(0.8, 0.8, 1);
-    glTranslatef(3,0,2.5);
+    glTranslatef(3.5,0,3.5);
 
     glColor3f(1,1,0);
     GLUquadricObj *downChair1, *upChair2,* diskDownChair, *diskUpChair;
@@ -104,7 +104,7 @@ void drawMan() {
     glutSolidSphere(0.2,32,32);
     glPopMatrix();
 
-    glTranslatef(-3,0,-2.5);
+    glTranslatef(-3.5,0,-3.5);
     glScalef(1/0.8, 1/0.8, 1);
 
 }
@@ -213,10 +213,10 @@ void drawSlotMachine() {
 
     glPushMatrix();
     glTranslatef(-0.5,3,-1.7);
-    glTranslatef(0,1.5,0);
-    glRotatef(180, 0,0,1);
-    glRotatef(270, 1,0,0);
 
+    glRotatef(90,0,1,0);
+    glRotatef(135, 1,0,0);
+    glTranslatef(0,0, -1.5);
     glutSolidSphere(0.2,32,32);
 
     GLUquadricObj* rucka = gluNewQuadric();
@@ -224,9 +224,9 @@ void drawSlotMachine() {
     gluCylinder(rucka, 0.1f,0.1f,1.5,32,32);
     glTranslatef(0,0,-0.1);
 
-    glRotatef(-270,1,0,0);
-    glRotatef(-180, 0,0,1);
-    glTranslatef(0,-1.5,0);
+    glTranslatef(0,0, 1.5);
+    glRotatef(-135, 1,0,0);
+    glRotatef(-90,0,1,0);
 
     GLUquadricObj* postoljeRucke = gluNewQuadric();
     GLUquadricObj* diskZaRucku = gluNewQuadric();
@@ -264,7 +264,7 @@ void drawSlotMachine() {
     glPopMatrix();
 
     glRotatef(90, 0,1,0);
-    glTranslatef(-2,0,0);
+    glTranslatef(-3,0,0);
     glScalef(1,1/1.1,1);
 
 }

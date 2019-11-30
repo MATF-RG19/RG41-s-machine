@@ -58,8 +58,8 @@ void on_display() {
     /*3,5,3,3,5,0,0,1,0 Pogled u ekran*/
     /*10,8,7,0,0,0, 0,1,0 Ulazni pogled*/
     /*12,8,8,0,2,0, 0,1,0*/
-    gluLookAt(12.0-goCamX,8.0-goCamY,9.0-goCamZ,0+goCamY,2+goCamY,0, 0,1,0);
-    //gluLookAt(3,5,3,3,5,0,0,1,0);
+    gluLookAt(12.0-goCamX,8.0-goCamY,9.0-goCamZ+1,0+goCamY,2+goCamY,0, 0,1,0);
+    //gluLookAt(3,5,4,3,5,0,0,1,0);
 
     glColor3f(1,1,1);
     glBegin(GL_LINES);
@@ -100,7 +100,6 @@ static void on_timer(int value) {
     goCamX += 1;
     goCamZ += 0.66;
     goCamY += 0.33;
-    cout << goCamX<< " " << goCamY << " " <<  goCamZ << " " <<endl;
     glutPostRedisplay();
 
     if (goCamX < 9)
