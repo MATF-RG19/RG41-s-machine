@@ -1,9 +1,8 @@
 #include <iostream>
 #include<GL/glut.h>
-#include "drawFunction.cpp"
+#include "drawFunction.h"
 using namespace std;
 
-static float window_width=0, window_height=0;
 static int timer_active;
 static double goCamX=0;
 static double goCamY=0;

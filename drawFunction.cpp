@@ -1,7 +1,7 @@
+#include <GL/glut.h>
 #include "drawFunction.h"
 
 void drawMan() {
-
     glScalef(0.8, 0.8, 1);
     glTranslatef(3,0,2.5);
 
@@ -216,11 +216,14 @@ void drawSlotMachine() {
     glTranslatef(0,1.5,0);
     glRotatef(180, 0,0,1);
     glRotatef(270, 1,0,0);
+
     glutSolidSphere(0.2,32,32);
+
     GLUquadricObj* rucka = gluNewQuadric();
     glTranslatef(0,0,0.1);
     gluCylinder(rucka, 0.1f,0.1f,1.5,32,32);
     glTranslatef(0,0,-0.1);
+
     glRotatef(-270,1,0,0);
     glRotatef(-180, 0,0,1);
     glTranslatef(0,-1.5,0);
@@ -265,4 +268,3 @@ void drawSlotMachine() {
     glScalef(1,1/1.1,1);
 
 }
-
