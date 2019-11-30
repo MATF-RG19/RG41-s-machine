@@ -2,12 +2,13 @@ CXX=g++
 CFLAGS=-c
 LDLIBS=-lglut -lGL -lGLU
 
-objects=s-machine.o drawFunction.o
+PROGRAM=slotMachine
+OBJECTS=s-machine.o drawFunction.o
 
-all: slotMachine
+all: $(PROGRAM)
 
-slotMachine: $(objects)
-	$(CXX) -o slotMachine $(objects) $(LDLIBS)
+$(PROGRAM): $(OBJECTS)
+	$(CXX) -o $(PROGRAM) $(OBJECTS) $(LDLIBS)
 
 s-machine.o: s-machine.cpp
 	$(CXX) $(CFLAGS) $(LDLIBS) s-machine.cpp
