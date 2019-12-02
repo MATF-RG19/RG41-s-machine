@@ -1,6 +1,7 @@
 #include <iostream>
 #include<GL/glut.h>
 #include "drawFunction.h"
+#include<string>
 using namespace std;
 
 static int timer_active;
@@ -11,12 +12,18 @@ static double goCamZ=0;
 static bool started = false;
 static bool startSlot = false;
 static int stepForSlot;
+static void whileSlotWorks(int);
+
+
+static int money = 1000;
+static int bet;
+static void writeMoney();
+
 
 static void on_display(void);
 static void on_keyboard(unsigned char, int, int);
 static void on_reshape(int, int);
 static void on_timer(int);
-static void whileSlotWorks(int);
 
 int main(int argc, char **argv)
 {
@@ -33,6 +40,9 @@ int main(int argc, char **argv)
 
     glClearColor(0.10, 0.10, 0.10, 0);
     glEnable(GL_DEPTH_TEST);
+
+    printf("Unesite BET koji zelite:\n");
+    scanf("%d", &bet);
 
     glutMainLoop();
 
@@ -67,6 +77,7 @@ void on_display() {
     lightInit();
     drawMan();
     drawSlotMachine(startSlot);
+    writeMoney();
 
     glutSwapBuffers();
 }
@@ -84,10 +95,14 @@ void on_keyboard(unsigned char c , int x , int y) {
             }
             break;
         case 32:
+            if (money <= 0)
+                exit(EXIT_SUCCESS);
+
             if (started){
                 startSlot = true;
                 stepForSlot = 10;
                 glutTimerFunc(50, whileSlotWorks, 0);
+                money -= bet;
             }
     }
 }
@@ -110,7 +125,7 @@ static void on_timer(int value) {
 static void whileSlotWorks(int value){
     if(value !=0)
         return;
-    
+
     glutPostRedisplay();
 
     stepForSlot--;
@@ -119,4 +134,18 @@ static void whileSlotWorks(int value){
     else{
         startSlot = false;
     }
+}
+
+void writeMoney() {
+    string s = "Money = " + to_string(money);
+
+    glColor3f(1,0.5,0.5);
+    glRasterPos3f( 3,4.75,3);
+
+    if(!started) return;
+
+    for( char c : s ) {
+        glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
+    }
+
 }
