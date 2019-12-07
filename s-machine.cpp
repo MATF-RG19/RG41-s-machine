@@ -1,7 +1,7 @@
 #include <iostream>
 #include<GL/glut.h>
-#include "drawFunction.h"
 #include<string>
+#include "drawFunction.h"
 using namespace std;
 
 static int timer_active;
@@ -9,8 +9,8 @@ static double goCamX=0;
 static double goCamY=0;
 static double goCamZ=0;
 
-static bool started = false;
-static bool startSlot = false;
+static bool programStarted = false;
+static bool slotWorks = false;
 static int stepForSlot;
 static void whileSlotWorks(int);
 
@@ -41,8 +41,10 @@ int main(int argc, char **argv)
     glClearColor(0.10, 0.10, 0.10, 0);
     glEnable(GL_DEPTH_TEST);
 
-    printf("Unesite BET koji zelite:\n");
-    scanf("%d", &bet);
+    //printf("Unesite vrednost ulozenog novca:\n");
+    //scanf("%d", &money);
+    //printf("Unesite BET koji zelite:\n");
+    //scanf("%d", &bet);
 
     glutMainLoop();
 
@@ -76,7 +78,7 @@ void on_display() {
     drawCoordSystem();
     lightInit();
     drawMan();
-    drawSlotMachine(startSlot);
+    drawSlotMachine(slotWorks);
     writeMoney();
 
     glutSwapBuffers();
@@ -98,8 +100,8 @@ void on_keyboard(unsigned char c , int x , int y) {
             if (money <= 0)
                 exit(EXIT_SUCCESS);
 
-            if (started){
-                startSlot = true;
+            if (programStarted && !slotWorks){
+                slotWorks = true;
                 stepForSlot = 10;
                 glutTimerFunc(50, whileSlotWorks, 0);
                 money -= bet;
@@ -119,7 +121,7 @@ static void on_timer(int value) {
     if (goCamX < 9)
       glutTimerFunc(50, on_timer, 0);
     else
-        started = true;
+        programStarted = true;
 }
 
 static void whileSlotWorks(int value){
@@ -132,17 +134,17 @@ static void whileSlotWorks(int value){
     if(stepForSlot >= 0)
         glutTimerFunc(50, whileSlotWorks, 0);
     else{
-        startSlot = false;
+        slotWorks = false;
     }
 }
 
 void writeMoney() {
     string s = "Money = " + to_string(money);
 
-    glColor3f(1,0.5,0.5);
+    glColor3f(0.75,0.75,0.75);
     glRasterPos3f( 3,4.75,3);
 
-    if(!started) return;
+    if(!programStarted) return;
 
     for( char c : s ) {
         glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );

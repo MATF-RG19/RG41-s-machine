@@ -1,7 +1,18 @@
+#include <iostream>
 #include <GL/glut.h>
 #include "drawFunction.h"
-#include <iostream>
+#include "image.h"
+
 using namespace std;
+
+#define HEADER "Image/header.bmp"
+#define FOOTER "Image/footer.bmp"
+#define TASTERS "Image/tasters.bmp"
+
+GLuint names[3];
+static void drawTextures();
+static void initTextures();
+
 
 void lightInit(){
     GLfloat light_ambient[] = { 0,0,0, 1 };
@@ -49,25 +60,31 @@ void drawMan() {
     glTranslatef(3.5,0,3.5);
 
     glColor3f(1,1,0);
-    GLUquadricObj *downChair1, *upChair2,* diskDownChair, *diskUpChair;
+    GLUquadricObj *downChair, *upChair, *diskDownChair1, *diskDownChair2, *diskUpChair1, *diskUpChair2;
 
     /*Down chair*/
     glPushMatrix();
-    downChair1 = gluNewQuadric();
-    diskDownChair = gluNewQuadric();
+    downChair = gluNewQuadric();
+    diskDownChair1 = gluNewQuadric();
+    diskDownChair2 = gluNewQuadric();
+
+
     glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
-    gluDisk(diskDownChair,0, 1.0f, 32, 32 );
-    gluCylinder(downChair1, 1.0f, 1.0f, 0.2f, 32, 32);
+    gluDisk(diskDownChair1,0, 1.0f, 32, 32 );
+    glTranslatef(0,0,0.2);
+    gluDisk(diskDownChair2,0, 1.0f, 32, 32 );
+    glTranslatef(0,0,-0.2);
+    gluCylinder(downChair, 1.0f, 1.0f, 0.2f, 32, 32);
     glPopMatrix();
 
     /*Up chair*/
     glPushMatrix();
-    upChair2 = gluNewQuadric();
-    diskUpChair = gluNewQuadric();
+    upChair = gluNewQuadric();
+    diskUpChair1 = gluNewQuadric();
     glTranslatef(0,3,0);
     glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
-    gluDisk(diskUpChair, 0,0.5f,32,32);
-    gluCylinder(upChair2, 0.5f, 0.7f, 0.2f, 32, 32);
+    gluDisk(diskUpChair1, 0,0.5f,32,32);
+    gluCylinder(upChair, 0.5f, 0.7f, 0.2f, 32, 32);
     glPopMatrix();
 
     /*Leg of chair*/
@@ -79,14 +96,14 @@ void drawMan() {
 
     glColor3f(0,1,0);
 
-    /*Body of men*/
+    /*Body of man*/
     glPushMatrix();
     glTranslatef(0,4.4,0);
     glScalef(2,3,1);
     glutSolidCube(0.8);
     glPopMatrix();
 
-    /*Head of men*/
+    /*Head of man*/
     glPushMatrix();
     glTranslatef(0,5.95,0);
     glutSolidSphere(0.35, 32,32);
@@ -169,7 +186,7 @@ void drawSlotMachine(bool shotTaster) {
     glPopMatrix();
 
     /*Middle of sm*/
-    glColor3f(1,0.9,0.9);
+    glColor3f(1,0.2,0.2);
     glPushMatrix();
     glTranslatef(0, 3,0);
     glScalef(1,20,10);
@@ -226,7 +243,7 @@ void drawSlotMachine(bool shotTaster) {
     glPushMatrix();
     glColor3f(0,0,0);
 
-    glTranslatef(0,0.10, 1);
+    /*glTranslatef(0,0.10, 1);
     glutSolidCube(0.35);
     glTranslatef(0,-0.10, -1);
 
@@ -240,7 +257,7 @@ void drawSlotMachine(bool shotTaster) {
 
     glTranslatef(0,0.25, -1.);
     glutSolidCube(0.2);
-    glTranslatef(0,-0.25, +1.);
+    glTranslatef(0,-0.25, +1.);*/
 
     glColor3f(1,0,0);
     glScalef(1,1,6);
@@ -289,32 +306,7 @@ void drawSlotMachine(bool shotTaster) {
     gluCylinder(postoljeRucke, 0.2,0.25,0.15, 32,32);
     glPopMatrix();
 
-    /*header for 777*/
-    glBegin(GL_POLYGON);
-    glColor3f(0.75,0.75,0.75);
-    glVertex3d(0.16,5.2,1.4);
-    glVertex3d(0.16,5.2,-1.4);
-    glVertex3d(0.16,5.85,-1.4);
-    glVertex3d(0.16,5.85,1.4);
-    glEnd();
-
-    /*footer black*/
-    glBegin(GL_POLYGON);
-    glColor3f(0,0,0);
-    glVertex3d(0.16,0.15,1.4);
-    glVertex3d(0.16,0.15,-1.4);
-    glVertex3d(0.16,2.40,-1.4);
-    glVertex3d(0.16,2.40,1.4);
-    glEnd();
-
-    /*footer red */
-    glBegin(GL_POLYGON);
-    glColor3f(1,0,0);
-    glVertex3d(0.16,0.25,1.25);
-    glVertex3d(0.16,0.25,-1.25);
-    glVertex3d(0.16,2.25,-1.25);
-    glVertex3d(0.16,2.25,1.25);
-    glEnd();
+    drawTextures();
 
     glPopMatrix();
 
@@ -322,4 +314,136 @@ void drawSlotMachine(bool shotTaster) {
     glTranslatef(-3,0,0);
     glScalef(1,1/1.1,1);
 
+}
+
+void drawTextures(){
+    
+    initTextures();
+
+    /*draw header*/
+    glBindTexture(GL_TEXTURE_2D, names[0]);
+    glBegin(GL_QUADS);
+    glNormal3f(0, 0, 1);
+
+    glTexCoord2f(0.1, 0);
+    glVertex3d(0.16,5.2,1.4);
+
+    glTexCoord2f(1, 0);
+    glVertex3d(0.16,5.2,-1.4);
+
+    glTexCoord2f(1, 1);
+    glVertex3d(0.16,5.85,-1.4);
+
+    glTexCoord2f(0.1, 1);
+    glVertex3d(0.16,5.85,1.4);
+    glEnd();
+
+    /*draw footer*/
+    glBindTexture(GL_TEXTURE_2D, names[1]);
+    glBegin(GL_QUADS);
+    glNormal3f(0, 0, 1);
+
+    glTexCoord2f(0, 0);
+    glVertex3d(0.16,0.15,1.4);
+
+    glTexCoord2f(1, 0);
+    glVertex3d(0.16,0.15,-1.4);
+
+    glTexCoord2f(1, 1);
+    glVertex3d(0.16,2.40,-1.4);
+
+    glTexCoord2f(0, 1);
+    glVertex3d(0.16,2.40,1.4);
+
+    glEnd();
+
+    /*draw tasters*/
+    glBindTexture(GL_TEXTURE_2D, names[2]);
+    glBegin(GL_QUADS);
+    glNormal3f(0, 0, 1);
+
+    glTexCoord2f(0, 0);
+    glVertex3d(0.65,3.2,1.5);
+
+    glTexCoord2f(1, 0);
+    glVertex3d(0.65,3.2,-1.5);
+
+    glTexCoord2f(1, 1);
+    glVertex3d(0.15,3.35,-1.5);
+
+    glTexCoord2f(0, 1);
+    glVertex3d(0.15,3.35,1.5);
+
+    glEnd();
+
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+}
+
+void initTextures(){
+    Image * image;
+
+    glEnable(GL_DEPTH_TEST);
+
+    glEnable(GL_TEXTURE_2D);
+
+    glTexEnvf(GL_TEXTURE_ENV,
+              GL_TEXTURE_ENV_MODE,
+              GL_REPLACE);
+    
+    image = image_init(0, 0);
+
+    /*header texture*/
+    image_read(image, HEADER);
+
+    /*id for textures*/
+    glGenTextures(3, names);
+
+    glBindTexture(GL_TEXTURE_2D, names[0]);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                 image->width, image->height, 0,
+                 GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+    /*footer texture*/
+    image_read(image, FOOTER);
+
+    glBindTexture(GL_TEXTURE_2D, names[1]);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                 image->width, image->height, 0,
+                 GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+
+
+    /*tasters texture*/
+    image_read(image, TASTERS);
+    glBindTexture(GL_TEXTURE_2D, names[2]);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_S, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_WRAP_T, GL_CLAMP);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D,
+                    GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
+                 image->width, image->height, 0,
+                 GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
+    
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    image_done(image);
 }

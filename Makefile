@@ -1,10 +1,10 @@
 CXX=g++
+CC=gcc
 CFLAGS=-c
 LDLIBS=-lglut -lGL -lGLU
 
 PROGRAM=slotMachine
-OBJECTS=s-machine.o drawFunction.o
-
+OBJECTS=s-machine.o drawFunction.o image.o
 all: $(PROGRAM)
 
 $(PROGRAM): $(OBJECTS)
@@ -15,6 +15,9 @@ s-machine.o: s-machine.cpp
 
 drawFunction.o: drawFunction.cpp
 	$(CXX) $(CFLAGS) $(LDLIBS) drawFunction.cpp
+
+image.o: image.c
+	$(CC) $(CFLAGS) image.c 
 
 clean:
 	rm -rf *o program

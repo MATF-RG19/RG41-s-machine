@@ -6,5 +6,4 @@ void drawMan();
 void drawSlotMachine(bool);
 void lightInit();
 
-
 #endif //DRAWFUNCTION_H
