@@ -1,22 +1,32 @@
 #include <iostream>
-#include<GL/glut.h>
-#include<string>
+#include <vector>
+#include <string>
+#include <cstdlib>
+#include <ctime>
+#include <GL/glut.h>
 #include "drawFunction.h"
+#include "slotFunction.h"
 using namespace std;
 
+
+vector<int> numImages; //from slotFunction.h
+
 static int timer_active;
-static double goCamX=0;
-static double goCamY=0;
-static double goCamZ=0;
+static double goCamX = 0;
+static double goCamY = 0;
+static double goCamZ = 0;
 
 static bool programStarted = false;
 static bool slotWorks = false;
-static int stepForSlot;
+static int stepForSlot = 0;
+static int randomImage;
 static void whileSlotWorks(int);
 
 
+
+
 static int money = 1000;
-static int bet;
+static int bet = 200;
 static void writeMoney();
 
 
@@ -40,6 +50,9 @@ int main(int argc, char **argv)
 
     glClearColor(0.10, 0.10, 0.10, 0);
     glEnable(GL_DEPTH_TEST);
+
+    srand(time(NULL));
+    
 
     //printf("Unesite vrednost ulozenog novca:\n");
     //scanf("%d", &money);
@@ -81,6 +94,8 @@ void on_display() {
     drawSlotMachine(slotWorks);
     writeMoney();
 
+    if(slotWorks) postSlots(numImages);
+
     glutSwapBuffers();
 }
 
@@ -92,7 +107,7 @@ void on_keyboard(unsigned char c , int x , int y) {
             break;
         case 's':
             if (!timer_active) {
-                glutTimerFunc(50, on_timer, 0);
+                glutTimerFunc(10, on_timer, 0);
                 timer_active = 1;
             }
             break;
@@ -102,46 +117,50 @@ void on_keyboard(unsigned char c , int x , int y) {
 
             if (programStarted && !slotWorks){
                 slotWorks = true;
-                stepForSlot = 10;
-                glutTimerFunc(50, whileSlotWorks, 0);
+                stepForSlot = 0;
+                glutTimerFunc(100, whileSlotWorks, 0);
                 money -= bet;
             }
     }
 }
 
-static void on_timer(int value) {
+void on_timer(int value) {
     if(value != 0)
         return;
 
-    goCamX += 1;
-    goCamZ += 0.66;
-    goCamY += 0.33;
+    goCamX += 0.5;
+    goCamZ += 0.33;
+    goCamY += 0.165;
     glutPostRedisplay();
 
     if (goCamX < 9)
-      glutTimerFunc(50, on_timer, 0);
+      glutTimerFunc(10, on_timer, 0);
     else
         programStarted = true;
 }
 
-static void whileSlotWorks(int value){
+void whileSlotWorks(int value){
     if(value !=0)
         return;
 
+    randomImage = rand() % 9;
+    numImages.push_back(randomImage);
+
     glutPostRedisplay();
 
-    stepForSlot--;
-    if(stepForSlot >= 0)
-        glutTimerFunc(50, whileSlotWorks, 0);
+    stepForSlot++;
+    if (stepForSlot <= 6)
+        glutTimerFunc(200, whileSlotWorks, 0);
     else{
         slotWorks = false;
+        numImages.clear();
     }
 }
 
 void writeMoney() {
     string s = "Money = " + to_string(money);
 
-    glColor3f(0.75,0.75,0.75);
+    glColor3f(0.96,0.96,0.96);
     glRasterPos3f( 3,4.75,3);
 
     if(!programStarted) return;
