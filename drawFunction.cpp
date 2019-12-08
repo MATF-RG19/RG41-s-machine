@@ -1,3 +1,5 @@
+/*Nacin iscrtavanja tekstura je preuzet od asistenta Rastka Djordjevica*/
+
 #include <iostream>
 #include <GL/glut.h>
 #include "drawFunction.h"
