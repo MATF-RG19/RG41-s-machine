@@ -2,14 +2,14 @@
 
 #include <iostream>
 #include <GL/glut.h>
-#include "drawFunction.h"
+#include "drawFunction.hpp"
 #include "image.h"
 
 using namespace std;
 
-#define HEADER "Image/header.bmp"
-#define FOOTER "Image/footer.bmp"
-#define TASTERS "Image/tasters.bmp"
+#define HEADER "images/header.bmp"
+#define FOOTER "images/footer.bmp"
+#define BUTTONS "images/buttons.bmp"
 
 GLuint names[3];
 static void drawTextures();
@@ -238,7 +238,7 @@ void drawSlotMachine(bool shotTaster) {
         glutSolidCube(0.1);
     glPopMatrix();
 
-    /*Tasters*/
+    /*buttons*/
     glPushMatrix();
     glTranslatef(0.3,3.0,0);
     glRotatef(-15,0,0,1 );
@@ -359,7 +359,7 @@ void drawTextures(){
 
     glEnd();
 
-    /*draw tasters*/
+    /*draw buttons*/
     glBindTexture(GL_TEXTURE_2D, names[2]);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, 1);
@@ -430,8 +430,8 @@ void initTextures(){
                  GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
 
 
-    /*tasters texture*/
-    image_read(image, TASTERS);
+    /*buttons texture*/
+    image_read(image, BUTTONS);
     glBindTexture(GL_TEXTURE_2D, names[2]);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP);

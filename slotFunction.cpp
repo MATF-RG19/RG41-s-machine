@@ -1,20 +1,20 @@
 #include <iostream>
 #include <vector>
 #include <GL/glut.h>
-#include "slotFunction.h"
+#include "slotFunction.hpp"
 #include "image.h"
 
 using namespace std;
 
-#define ANANAS "Image/ananas.bmp"
-#define DOLAR "Image/dolar.bmp"
-#define E "Image/e.bmp"
-#define GROZDJE "Image/grozdje.bmp"
-#define KOCKICA "Image/kockica.bmp"
-#define LIMUN "Image/limun.bmp"
-#define LUBENICA "Image/lubenica.bmp"
-#define SPIN "Image/spin.bmp"
-#define TRESNJICE "Image/tresnjice.bmp"
+#define ANANAS "images/ananas.bmp"
+#define DOLAR "images/dolar.bmp"
+#define E "images/e.bmp"
+#define GROZDJE "images/grozdje.bmp"
+#define KOCKICA "images/kockica.bmp"
+#define LIMUN "images/limun.bmp"
+#define LUBENICA "images/lubenica.bmp"
+#define SPIN "images/spin.bmp"
+#define TRESNJICE "images/tresnjice.bmp"
 
 void initTextures();
 GLuint images[9];
@@ -277,3 +277,32 @@ void initTextures(){
 
     image_done(image);
 }
+
+
+void writeMoney(int money) {
+	
+    string s = "Money = " + to_string(money);
+	
+    glColor3f(0.96,0.96,0.96);
+    glRasterPos3f(3,4.75,3);
+    
+    for( char c : s ) {
+        glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
+    }
+
+}
+
+
+void writeResultForSlotShot(int money) {
+	
+    string s = "Res: " + to_string(money);
+	
+    glColor3f(0.96,0.96,0.96);
+    glRasterPos3f(2.75,4.75,3);
+
+    for( char c : s ) {
+        glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
+    }
+
+}
+

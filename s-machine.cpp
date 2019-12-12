@@ -4,12 +4,11 @@
 #include <cstdlib>
 #include <ctime>
 #include <GL/glut.h>
-#include "drawFunction.h"
-#include "slotFunction.h"
+#include "drawFunction.hpp"
+#include "slotFunction.hpp"
 using namespace std;
 
-
-vector<int> numImages; //from slotFunction.h
+vector<int> numImages; // from slotFunction.h
 
 static int timer_active;
 static double goCamX = 0;
@@ -22,13 +21,8 @@ static int stepForSlot = 0;
 static int randomImage;
 static void whileSlotWorks(int);
 
-
-
-
 static int money = 1000;
 static int bet = 200;
-static void writeMoney();
-
 
 static void on_display(void);
 static void on_keyboard(unsigned char, int, int);
@@ -82,8 +76,6 @@ void on_display() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    /*3,5,3,3,5,0,0,1,0 Pogled u ekran*/
-    /*10,8,7,0,0,0, 0,1,0 Ulazni pogled*/
     //gluLookAt(12,8,8,0,2,0, 0,1,0);
     gluLookAt(12.0-goCamX,8.0-goCamY,9.0-goCamZ+1,0+goCamY,2+goCamY,0, 0,1,0);
     //gluLookAt(3,5,4,3,5,0,0,1,0);
@@ -92,9 +84,15 @@ void on_display() {
     lightInit();
     drawMan();
     drawSlotMachine(slotWorks);
-    writeMoney();
 
-    if(slotWorks) postSlots(numImages);
+    if(programStarted){
+        writeMoney(money);
+    }
+    
+    if(slotWorks and programStarted) {
+       writeResultForSlotShot(-bet);
+       postSlots(numImages);
+    }
 
     glutSwapBuffers();
 }
@@ -121,6 +119,14 @@ void on_keyboard(unsigned char c , int x , int y) {
                 glutTimerFunc(100, whileSlotWorks, 0);
                 money -= bet;
             }
+            break;
+       case 'r':
+       		money = 0;
+       		slotWorks = false;
+       		glutPostRedisplay();
+       		break;
+            	
+            
     }
 }
 
@@ -136,13 +142,14 @@ void on_timer(int value) {
     if (goCamX < 9)
       glutTimerFunc(10, on_timer, 0);
     else
-        programStarted = true;
+      programStarted = true;
 }
 
 void whileSlotWorks(int value){
     if(value !=0)
         return;
-
+        
+        
     randomImage = rand() % 9;
     numImages.push_back(randomImage);
 
@@ -155,18 +162,4 @@ void whileSlotWorks(int value){
         slotWorks = false;
         numImages.clear();
     }
-}
-
-void writeMoney() {
-    string s = "Money = " + to_string(money);
-
-    glColor3f(0.96,0.96,0.96);
-    glRasterPos3f( 3,4.75,3);
-
-    if(!programStarted) return;
-
-    for( char c : s ) {
-        glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
-    }
-
 }
