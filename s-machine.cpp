@@ -4,7 +4,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <GL/glut.h>
-#include <unistd.h>
 #include "drawFunction.hpp"
 #include "slotFunction.hpp"
 #include "irrKlangLib/include/irrKlang.h"
@@ -29,9 +28,6 @@ static bool slotWorks = false;
 static int stepForSlot = 0;
 static int randomImage;
 static void whileSlotWorks(int);
-
-static int money = 1000;
-static int bet = 200;
 
 static void on_display(void);
 static void on_keyboard(unsigned char, int, int);
@@ -59,10 +55,14 @@ int main(int argc, char **argv)
     engine = createIrrKlangDevice(); //kreiranje zvuka
     engine->play2D("irrKlangLib/media/music.mp3", true); //pustanje zvuka
     
-    //printf("Unesite vrednost ulozenog novca:\n");
-    //scanf("%d", &money);
-    //printf("Unesite BET koji zelite:\n");
-    //scanf("%d", &bet);
+    /*int money, bet;
+    printf("Unesite iznos vaseg novca:\n");
+    scanf("%d", &money);
+    printf("Unesite zeljeni BET. Moguce vrednosti [1, 5, 10, 50, 100]\n");
+    scanf("%d", &bet);*/
+
+    setMoney(1000);
+    setBet(100);
 
     glutMainLoop();
 
@@ -90,21 +90,13 @@ void on_display() {
     //gluLookAt(12,8,8,0,2,0, 0,1,0);
     gluLookAt(12.0-goCamX,8.0-goCamY,9.0-goCamZ+1,0+goCamY,2+goCamY,0, 0,1,0);
     //gluLookAt(3,5,4,3,5,0,0,1,0);
-
+    
     drawCoordSystem();
     lightInit();
     drawMan();
     drawSlotMachine(slotWorks);
 
-    if(programStarted){
-        writeMoney(money);
-    }
-    
-
-    if(slotWorks and programStarted) {
-       writeResultForSlotShot(-bet);
-       postSlots(numImages);
-    }
+    if(programStarted) writeMoney();
 
     if(slotWorks) postSlots(numImages);
 
@@ -115,9 +107,8 @@ void on_keyboard(unsigned char c , int x , int y) {
 
     switch (c){
         case 27:
-            exit(0);
             engine->drop(); //oslobadjanje zvuka
-            break;
+            exit(0);
         case 's':
             if (!timer_active) {
                 glutTimerFunc(10, on_timer, 0);
@@ -125,21 +116,20 @@ void on_keyboard(unsigned char c , int x , int y) {
             }
             break;
         case 32:
-            if (money <= 0){
+            if(getMoney() == 0){
                 engine->drop();
-                exit(EXIT_SUCCESS);
+                exit(0);
             }
 
             if (programStarted && !slotWorks){
                 slotWorks = true;
                 stepForSlot = 0;
                 glutTimerFunc(100, whileSlotWorks, 0);
-                money -= bet;
             }
 
             break;
        case 'r':
-       		money = 0;
+       		setMoney(0);
        		slotWorks = false;
        		glutPostRedisplay();
        		break;       
@@ -165,17 +155,13 @@ void whileSlotWorks(int value){
     if(value !=0)
         return;
         
-        
-    randomImage = rand() % 9;
-    numImages.push_back(randomImage);
-
     randomImage = rand() % 9;
     numImages.push_back(randomImage);
 
     glutPostRedisplay();
 
     stepForSlot++;
-    if (stepForSlot <= 6)
+    if (stepForSlot <= 7)
         glutTimerFunc(200, whileSlotWorks, 0);
     else{
         slotWorks = false;

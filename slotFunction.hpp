@@ -4,9 +4,10 @@
 #include<vector>
 using namespace std;
 
-//extern vector<int> numImages;
 void postSlots(vector<int>&);
-void writeMoney(int);
-void writeResultForSlotShot(int);
+void setMoney(int);
+void setBet(int);
+int getMoney();
+void writeMoney();
 
 #endif //SLOTFUNCTION_HPP
