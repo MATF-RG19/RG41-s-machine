@@ -1,5 +1,5 @@
-#ifndef SLOTFUNCTION_H
-#define SLOTFUNCTION_H
+#ifndef SLOTFUNCTION_HPP
+#define SLOTFUNCTION_HPP
 
 #include<vector>
 using namespace std;
@@ -9,4 +9,4 @@ void postSlots(vector<int>&);
 void writeMoney(int);
 void writeResultForSlotShot(int);
 
-#endif //SLOTFUNCTION_H
+#endif //SLOTFUNCTION_HPP
