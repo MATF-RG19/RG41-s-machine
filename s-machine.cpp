@@ -106,6 +106,8 @@ void on_display() {
        postSlots(numImages);
     }
 
+    if(slotWorks) postSlots(numImages);
+
     glutSwapBuffers();
 }
 
@@ -164,6 +166,9 @@ void whileSlotWorks(int value){
         return;
         
         
+    randomImage = rand() % 9;
+    numImages.push_back(randomImage);
+
     randomImage = rand() % 9;
     numImages.push_back(randomImage);
 
