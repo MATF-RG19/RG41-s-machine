@@ -6,12 +6,12 @@
 
 using namespace std;
 
-#define ANANAS "images/ananas.bmp"
-#define DOLAR "images/dolar.bmp"
-#define E "images/e.bmp"
+#define ANANAS "images/ananas.bmp" 
+#define DOLAR "images/dolar.bmp" 
+#define E "images/e.bmp" 
 #define GROZDJE "images/grozdje.bmp"
-#define KOCKICA "images/kockica.bmp"
-#define LIMUN "images/limun.bmp"
+#define KOCKICA "images/kockica.bmp" 
+#define LIMUN "images/limun.bmp" 
 #define LUBENICA "images/lubenica.bmp"
 #define SPIN "images/spin.bmp"
 #define TRESNJICE "images/tresnjice.bmp"
@@ -303,6 +303,6 @@ void writeResultForSlotShot(int money) {
     for( char c : s ) {
         glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
     }
-
+    
 }
 

@@ -4,9 +4,18 @@
 #include <cstdlib>
 #include <ctime>
 #include <GL/glut.h>
+#include <unistd.h>
 #include "drawFunction.hpp"
 #include "slotFunction.hpp"
+#include "irrKlangLib/include/irrKlang.h"
+
 using namespace std;
+
+
+using namespace irrklang;
+#pragma comment (lib, "irrKlangLib/lib");
+ISoundEngine* engine;
+
 
 vector<int> numImages; // from slotFunction.h
 
@@ -46,8 +55,10 @@ int main(int argc, char **argv)
     glEnable(GL_DEPTH_TEST);
 
     srand(time(NULL));
-    
 
+    engine = createIrrKlangDevice(); //kreiranje zvuka
+    engine->play2D("irrKlangLib/media/music.mp3", true); //pustanje zvuka
+    
     //printf("Unesite vrednost ulozenog novca:\n");
     //scanf("%d", &money);
     //printf("Unesite BET koji zelite:\n");
@@ -89,6 +100,7 @@ void on_display() {
         writeMoney(money);
     }
     
+
     if(slotWorks and programStarted) {
        writeResultForSlotShot(-bet);
        postSlots(numImages);
@@ -102,6 +114,7 @@ void on_keyboard(unsigned char c , int x , int y) {
     switch (c){
         case 27:
             exit(0);
+            engine->drop(); //oslobadjanje zvuka
             break;
         case 's':
             if (!timer_active) {
@@ -110,8 +123,10 @@ void on_keyboard(unsigned char c , int x , int y) {
             }
             break;
         case 32:
-            if (money <= 0)
+            if (money <= 0){
+                engine->drop();
                 exit(EXIT_SUCCESS);
+            }
 
             if (programStarted && !slotWorks){
                 slotWorks = true;
@@ -119,14 +134,13 @@ void on_keyboard(unsigned char c , int x , int y) {
                 glutTimerFunc(100, whileSlotWorks, 0);
                 money -= bet;
             }
+
             break;
        case 'r':
        		money = 0;
        		slotWorks = false;
        		glutPostRedisplay();
-       		break;
-            	
-            
+       		break;       
     }
 }
 
