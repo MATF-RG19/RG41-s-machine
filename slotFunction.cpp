@@ -3,7 +3,7 @@
 #include <GL/glut.h>
 #include <unistd.h>
 #include "slotFunction.hpp"
-#include "image.h"
+#include "imageLib/image.h"
 
 using namespace std;
 
@@ -166,7 +166,6 @@ void postSlots(vector<int> &numImages){
         glEnd();
 
         globalScore = calculateScore();
-        cout << globalScore << endl;
         writeResultForSlotShot();
     }
 
@@ -189,80 +188,122 @@ int calculateScore(){
     int score = 1;
     /*Horizontalno spajanje(horizontal payline)*/        
     if ((f1 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f2 == f4 && f4 == f6 && f6 == Fruits::ananas)){
-        score *= 10;
-        cout << "Ananas" << score << endl;
+        score *= 8;
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::dolar) || (f2 == f4 && f4 == f6 && f6 == Fruits::dolar)){
-        score *= 200;
-       cout << "Dolar" << score << endl;
+        score *= 30;
 }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::e) || (f2 == f4 && f4 == f6 && f6 == Fruits::e)){
-        score *= 500;
-        cout << "E" << score << endl;
+        score *= 50;
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::grozdje) || (f2 == f4 && f4 == f6 && f6 == Fruits::grozdje)){
-        score *= 20;
-        cout << "Grozdje" << score << endl;
+        score *= 16;
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::kockica) || (f2 == f4 && f4 == f6 && f6 == Fruits::kockica)){
-        score *= 100;
-        cout << "Kockica" << score << endl;
+        score *= 25;
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::limun) || (f2 == f4 && f4 == f6 && f6 == Fruits::limun)){
-        score *= 15;
-        cout << "Limun" << score << endl;
+        score *= 12;
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::lubenica) || (f2 == f4 && f4 == f6 && f6 == Fruits::lubenica)){
-        score *= 25;
-        cout << "Lubenica" << score << endl;
+        score *= 18;
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::spin) || (f2 == f4 && f4 == f6 && f6 == Fruits::spin)){
-        score *= 50;
-        cout << "Spin" << score << endl;
+        score *= 20;
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::tresnjice) || (f2 == f4 && f4 == f6 && f6 == Fruits::tresnjice)){
         score *= 5;
-        cout << "Tresnjica" << score << endl;
     }
     /*Trougao spajanje:  - + -  ili  + - +
                          + - +       - + -  gde su plus iste slicice*/
-    if ((f2 == f3 && f3 == f5 && f6 == Fruits::ananas) || (f1 == f4 && f4 == f5 && f5 == Fruits::ananas)){
-        score *= 10;
-        cout << "Ananas" << score << endl;
+    else if ((f2 == f3 && f3 == f5 && f6 == Fruits::ananas) || (f1 == f4 && f4 == f5 && f5 == Fruits::ananas)){
+        score *= 8;
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::dolar) || (f1 == f4 && f4 == f5 && f5 == Fruits::dolar)){
-        score *= 200;
-        cout << "Dolar" << score << endl;
+        score *= 30;
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::e) || (f1 == f4 && f4 == f5 && f5 == Fruits::e)){
-        score *= 500;
-        cout << "E" << score << endl;
+        score *= 50;
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::grozdje) || (f1 == f4 && f4 == f5 && f5 == Fruits::grozdje)){
-        score *= 20;
-        cout << "Grozdje" << score << endl;
+        score *= 16;
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::kockica) || (f1 == f4 && f4 == f5 && f5 == Fruits::kockica)){
-        score *= 100;
-        cout << "Kockica" << score << endl;
+        score *= 25;
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::limun) || (f1 == f4 && f4 == f5 && f5 == Fruits::limun)){
         score *= 15;
-        cout << "Limun" << score << endl;
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::lubenica) || (f1 == f4 && f4 == f5 && f5 == Fruits::lubenica)){
-        score *= 25;
-        cout << "Lubenica" << score << endl;
+        score *= 18;
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::spin) || (f1 == f4 && f4 == f5 && f5 == Fruits::spin)){
-        score *= 50;
-        cout << "Spin" << score << endl;
+        score *= 20;
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::tresnjice) || (f1 == f4 && f4 == f5 && f5 == Fruits::tresnjice)){
         score *= 5;
-        cout << "Tresnjica" << score << endl;
     }
 
+    /*Spajanje: + - -  ili  - + +
+                - + +       + - -  */
+    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f1 == f4 && f4 == f6 && f6 == Fruits::ananas)){
+        score *= 8;
+    }
+    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::dolar) || (f1 == f4 && f4 == f6 && f6 == Fruits::dolar)){
+        score *= 30;
+    }
+    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::e) || (f1 == f4 && f4 == f6 && f6 == Fruits::e)){
+        score *= 50;
+    }
+    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::grozdje) || (f1 == f4 && f4 == f6 && f6 == Fruits::grozdje)){
+        score *= 16;
+    }
+    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::kockica) || (f1 == f4 && f4 == f6 && f6 == Fruits::kockica)){
+        score *= 25;
+    }
+    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::limun) || (f1 == f4 && f4 == f6 && f6 == Fruits::limun)){
+        score *= 15;
+    }
+    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::lubenica) || (f1 == f4 && f4 == f6 && f6 == Fruits::lubenica)){
+        score *= 18;
+    }
+    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::spin) || (f1 == f4 && f4 == f6 && f6 == Fruits::spin)){
+        score *= 20;
+    }
+    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::tresnjice) || (f1 == f4 && f4 == f6 && f6 == Fruits::tresnjice)){
+        score *= 5;
+    }
+
+
+    /*Spajanje: - - +  ili  + + -
+                + + -       - - +  */
+    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::ananas) || (f2 == f4 && f4 == f5 && f5 == Fruits::ananas)){
+        score *= 8;
+    }
+    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::dolar) || (f2 == f4 && f4 == f5 && f5 == Fruits::dolar)){
+        score *= 30;
+    }
+    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::e) || (f2 == f4 && f4 == f5 && f5 == Fruits::e)){
+        score *= 50;
+    }
+    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::grozdje) || (f2 == f4 && f4 == f5 && f5 == Fruits::grozdje)){
+        score *= 16;
+    }
+    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::kockica) || (f2 == f4 && f4 == f5 && f5 == Fruits::kockica)){
+        score *= 25;
+    }
+    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::limun) || (f2 == f4 && f4 == f5 && f5 == Fruits::limun)){
+        score *= 15;
+    }
+    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::lubenica) || (f2 == f4 && f4 == f5 && f5 == Fruits::lubenica)){
+        score *= 18;
+    }
+    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::spin) || (f2 == f4 && f4 == f5 && f5 == Fruits::spin)){
+        score *= 20;
+    }
+    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::tresnjice) || (f2 == f4 && f4 == f5 && f5 == Fruits::tresnjice)){
+        score *= 5;
+    }
 
     return score;
 }
@@ -303,6 +344,7 @@ void writeResultForSlotShot() {
     }
     else{
         /*Dobitak*/
+        money -= bet;
         money += bet*globalScore;
         result = bet*globalScore;
         globalScore = 1;

@@ -28,6 +28,9 @@ static int stepForSlot = 0;
 static int randomImage;
 static void whileSlotWorks(int);
 
+static int money;
+static int bet;
+
 static void on_display(void);
 static void on_keyboard(unsigned char, int, int);
 static void on_reshape(int, int);
@@ -52,16 +55,17 @@ int main(int argc, char **argv)
     srand(time(NULL));
 
     engine = createIrrKlangDevice(); //kreiranje zvuka
-    //engine->play2D("irrKlangLib/media/ophelia.mp3", true); //pustanje zvuka
+    engine->play2D("irrKlangLib/media/music.mp3", true); //pustanje zvuka
     
-    /*int money, bet;
+    /*
     cout << "Unesite iznos vaseg novca" << endl;
     cin >> money;
     cout << "Unesite zeljeni BET. Moguce vrednosti [1, 5, 10, 50, 100]" << endl;
     cin >> bet;*/
-
-    setMoney(1000);
-    setBet(10);
+    money = 1000;
+    bet = 10;
+    setMoney(money);
+    setBet(bet);
 
     glutMainLoop();
 
@@ -102,7 +106,7 @@ void on_keyboard(unsigned char c , int x , int y) {
             }
             break;
         case 32:
-            if(getMoney() == 0){
+            if(getMoney() < bet){
                 engine->drop();
                 exit(0);
             }

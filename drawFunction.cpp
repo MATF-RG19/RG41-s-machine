@@ -3,7 +3,7 @@
 #include <iostream>
 #include <GL/glut.h>
 #include "drawFunction.hpp"
-#include "image.h"
+#include "imageLib/image.h"
 
 using namespace std;
 

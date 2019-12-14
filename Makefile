@@ -7,7 +7,7 @@ LDLIBS=-lglut -lGL -lGLU
 OPTS =  -I"irrKlangLib/include" -L"/usr/lib" irrKlangLib/bin/linux-gcc-64/libIrrKlang.so -pthread
 
 PROGRAM=slotMachine
-OBJECTS=s-machine.o drawFunction.o slotFunction.o image.o 
+OBJECTS=s-machine.o drawFunction.o slotFunction.o ./imageLib/image.o 
 all: $(PROGRAM)
 
 $(PROGRAM): $(OBJECTS)
@@ -23,7 +23,7 @@ slotFunction.o: slotFunction.cpp
 	$(CXX) $(CFLAGS) $(LDLIBS) slotFunction.cpp
 	
 image.o: image.c
-	$(CC) $(CFLAGS) image.c 
+	$(CC) $(CFLAGS) ./imageLib/image.c
 
 clean:
 	rm -rf *o program
