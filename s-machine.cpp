@@ -10,15 +10,14 @@
 
 using namespace std;
 
-
 using namespace irrklang;
 #pragma comment (lib, "irrKlangLib/lib");
 ISoundEngine* engine;
 
 
-vector<int> numImages; // from slotFunction.h
+vector<int> numImages;
 
-static int timer_active;
+static bool timerActive = false;
 static double goCamX = 0;
 static double goCamY = 0;
 static double goCamZ = 0;
@@ -53,31 +52,20 @@ int main(int argc, char **argv)
     srand(time(NULL));
 
     engine = createIrrKlangDevice(); //kreiranje zvuka
-    engine->play2D("irrKlangLib/media/music.mp3", true); //pustanje zvuka
+    //engine->play2D("irrKlangLib/media/ophelia.mp3", true); //pustanje zvuka
     
     /*int money, bet;
-    printf("Unesite iznos vaseg novca:\n");
-    scanf("%d", &money);
-    printf("Unesite zeljeni BET. Moguce vrednosti [1, 5, 10, 50, 100]\n");
-    scanf("%d", &bet);*/
+    cout << "Unesite iznos vaseg novca" << endl;
+    cin >> money;
+    cout << "Unesite zeljeni BET. Moguce vrednosti [1, 5, 10, 50, 100]" << endl;
+    cin >> bet;*/
 
     setMoney(1000);
-    setBet(100);
+    setBet(10);
 
     glutMainLoop();
 
     return 0;
-}
-
-
-
-static void on_reshape(int width, int height)
-{
-    glViewport(0, 0, width, height);
-
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(60, (float) width / height, 1, 1500);
 }
 
 void on_display() {
@@ -87,9 +75,7 @@ void on_display() {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    //gluLookAt(12,8,8,0,2,0, 0,1,0);
     gluLookAt(12.0-goCamX,8.0-goCamY,9.0-goCamZ+1,0+goCamY,2+goCamY,0, 0,1,0);
-    //gluLookAt(3,5,4,3,5,0,0,1,0);
     
     drawCoordSystem();
     lightInit();
@@ -110,9 +96,9 @@ void on_keyboard(unsigned char c , int x , int y) {
             engine->drop(); //oslobadjanje zvuka
             exit(0);
         case 's':
-            if (!timer_active) {
+            if (!timerActive) {
                 glutTimerFunc(10, on_timer, 0);
-                timer_active = 1;
+                timerActive = true;
             }
             break;
         case 32:
@@ -124,7 +110,7 @@ void on_keyboard(unsigned char c , int x , int y) {
             if (programStarted && !slotWorks){
                 slotWorks = true;
                 stepForSlot = 0;
-                glutTimerFunc(100, whileSlotWorks, 0);
+                glutTimerFunc(50, whileSlotWorks, 0);
             }
 
             break;
@@ -133,6 +119,24 @@ void on_keyboard(unsigned char c , int x , int y) {
        		slotWorks = false;
        		glutPostRedisplay();
        		break;       
+    }
+}
+
+void whileSlotWorks(int value){
+    if(value !=0)
+        return;
+        
+    randomImage = rand() % 9;
+    numImages.push_back(randomImage);
+
+    glutPostRedisplay();
+
+    stepForSlot++;
+    if (stepForSlot <= 7)
+        glutTimerFunc(70, whileSlotWorks, 0);
+    else{
+        slotWorks = false;
+        numImages.clear();
     }
 }
 
@@ -151,20 +155,11 @@ void on_timer(int value) {
       programStarted = true;
 }
 
-void whileSlotWorks(int value){
-    if(value !=0)
-        return;
-        
-    randomImage = rand() % 9;
-    numImages.push_back(randomImage);
+static void on_reshape(int width, int height)
+{
+    glViewport(0, 0, width, height);
 
-    glutPostRedisplay();
-
-    stepForSlot++;
-    if (stepForSlot <= 7)
-        glutTimerFunc(200, whileSlotWorks, 0);
-    else{
-        slotWorks = false;
-        numImages.clear();
-    }
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(60, (float) width / height, 1, 1500);
 }

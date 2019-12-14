@@ -46,7 +46,7 @@ void lightInit(){
 }
 
 void drawCoordSystem(){
-    glColor3f(1,1,1);
+    glColor3f(0.96, 0.96, 0.96);
     glBegin(GL_LINES);
         glVertex3d(0,0, 0);
         glVertex3d(7,0,0);
@@ -64,7 +64,7 @@ void drawMan() {
     glColor3f(1,1,0);
     GLUquadricObj *downChair, *upChair, *diskDownChair1, *diskDownChair2, *diskUpChair1, *diskUpChair2;
 
-    /*Down chair*/
+    /*Donji deo stolice*/
     glPushMatrix();
     downChair = gluNewQuadric();
     diskDownChair1 = gluNewQuadric();
@@ -79,7 +79,7 @@ void drawMan() {
     gluCylinder(downChair, 1.0f, 1.0f, 0.2f, 32, 32);
     glPopMatrix();
 
-    /*Up chair*/
+    /*Gornji deo stolice*/
     glPushMatrix();
     upChair = gluNewQuadric();
     diskUpChair1 = gluNewQuadric();
@@ -89,7 +89,7 @@ void drawMan() {
     gluCylinder(upChair, 0.5f, 0.7f, 0.2f, 32, 32);
     glPopMatrix();
 
-    /*Leg of chair*/
+    /*Noga od stolice*/
     glPushMatrix();
     glTranslatef(0,1.5,0);
     glScalef(1,5,1);
@@ -98,34 +98,34 @@ void drawMan() {
 
     glColor3f(0,1,0);
 
-    /*Body of man*/
+    /*Telo coveka*/
     glPushMatrix();
     glTranslatef(0,4.4,0);
     glScalef(2,3,1);
     glutSolidCube(0.8);
     glPopMatrix();
 
-    /*Head of man*/
+    /*Glava coveka*/
     glPushMatrix();
     glTranslatef(0,5.95,0);
     glutSolidSphere(0.35, 32,32);
     glPopMatrix();
 
 
-    /*Right leg*/
+    /*Desna noga*/
     glPushMatrix();
     glTranslatef(0.6,3.4,-0.4);
     glScalef(1,1,4);
     glutSolidCube(0.4);
     glPopMatrix();
-    /*Left leg*/
+    /*Leva noga*/
     glPushMatrix();
     glTranslatef(-0.6,3.4,-0.4);
     glScalef(1,1,4);
     glutSolidCube(0.4);
     glPopMatrix();
 
-    /*Right foot*/
+    /*Desno potkolenica*/
     glPushMatrix();
     glTranslatef(0.6,2.5,-1.4);
     glRotatef(-270,1,0,0);
@@ -133,7 +133,7 @@ void drawMan() {
     glutSolidCube(0.4);
     glPopMatrix();
 
-    /*Left foot*/
+    /*Leva potkolenica*/
     glPushMatrix();
     glTranslatef(-0.6,2.5,-1.4);
     glRotatef(-270,1,0,0);
@@ -141,7 +141,7 @@ void drawMan() {
     glutSolidCube(0.4);
     glPopMatrix();
 
-    /*Right hand*/
+    /*Desna ruka*/
     glColor3f(0,0.9,0);
     glPushMatrix();
     glTranslatef(1,4.8,0);
@@ -154,7 +154,7 @@ void drawMan() {
     glutSolidSphere(0.2,32,32);
     glPopMatrix();
 
-    /*Left hand*/
+    /*Leva ruka*/
     glPushMatrix();
     glTranslatef(-1,4.8,0);
     glRotatef(-270,1,0,0);
@@ -179,7 +179,7 @@ void drawSlotMachine(bool shotTaster) {
 
     glPushMatrix();
 
-    /*Back of sm*/
+    /*Ledja slot masine*/
     glColor3f(0,0,0);
     glPushMatrix();
     glTranslatef(-0.5,3,0);
@@ -187,7 +187,7 @@ void drawSlotMachine(bool shotTaster) {
     glutSolidCube(1);
     glPopMatrix();
 
-    /*Middle of sm*/
+    /*Srednji deo slot masine*/
     glColor3f(1,0.2,0.2);
     glPushMatrix();
     glTranslatef(0, 3,0);
@@ -195,8 +195,8 @@ void drawSlotMachine(bool shotTaster) {
     glutSolidCube(0.3);
     glPopMatrix();
 
-    /*My view*/
-    /*horizontal line*/
+    /*Moj pogled*/
+    /*gornji deo ekrana*/
     glColor3f(0.75,0.75,0.75);
     glPushMatrix();
         glTranslatef(0.15, 5, 0);
@@ -209,7 +209,7 @@ void drawSlotMachine(bool shotTaster) {
         glScalef(1.2,1,20);
         glutSolidCube(0.1);
     glPopMatrix();
-    /*vertical line Up*/
+    /*Vertikalni razmaci kolona*/
     glPushMatrix();
         glTranslatef(0.15, 4.5, 1);
         glRotatef(90,1,0,0);
@@ -238,7 +238,7 @@ void drawSlotMachine(bool shotTaster) {
         glutSolidCube(0.1);
     glPopMatrix();
 
-    /*buttons*/
+    /*Dugmici*/
     glPushMatrix();
     glTranslatef(0.3,3.0,0);
     glRotatef(-15,0,0,1 );
@@ -270,7 +270,7 @@ void drawSlotMachine(bool shotTaster) {
     glTranslatef(-0.3,-3.0,0);
     glPopMatrix();
 
-    /*Handle*/
+    /*Rucka*/
     glColor3f(0,1,0);
 
     glPushMatrix();
@@ -322,7 +322,7 @@ void drawTextures(){
     
     initTextures();
 
-    /*draw header*/
+    /*Crtanje zaglavlja: JACKPOT*/
     glBindTexture(GL_TEXTURE_2D, names[0]);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, 1);
@@ -340,7 +340,7 @@ void drawTextures(){
     glVertex3d(0.16,5.85,1.4);
     glEnd();
 
-    /*draw footer*/
+    /*Crtanje podnozja: MEGAJACK*/
     glBindTexture(GL_TEXTURE_2D, names[1]);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, 1);
@@ -359,7 +359,7 @@ void drawTextures(){
 
     glEnd();
 
-    /*draw buttons*/
+    /*Crtanje tastera*/
     glBindTexture(GL_TEXTURE_2D, names[2]);
     glBegin(GL_QUADS);
     glNormal3f(0, 0, 1);
@@ -396,12 +396,9 @@ void initTextures(){
     
     image = image_init(0, 0);
 
-    /*header texture*/
-    image_read(image, HEADER);
-
-    /*id for textures*/
     glGenTextures(3, names);
 
+    image_read(image, HEADER);
     glBindTexture(GL_TEXTURE_2D, names[0]);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -415,9 +412,7 @@ void initTextures(){
                  image->width, image->height, 0,
                  GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
 
-    /*footer texture*/
     image_read(image, FOOTER);
-
     glBindTexture(GL_TEXTURE_2D, names[1]);
     glTexParameteri(GL_TEXTURE_2D,
                     GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -430,7 +425,6 @@ void initTextures(){
                  GL_RGB, GL_UNSIGNED_BYTE, image->pixels);
 
 
-    /*buttons texture*/
     image_read(image, BUTTONS);
     glBindTexture(GL_TEXTURE_2D, names[2]);
     glTexParameteri(GL_TEXTURE_2D,

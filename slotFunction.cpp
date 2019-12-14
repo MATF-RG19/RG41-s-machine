@@ -27,13 +27,13 @@ Fruits f6;
 #define SPIN "images/spin.bmp" //x50
 #define TRESNJICE "images/tresnjice.bmp" // x25
 
-#define WATCHRESULT 1000000 
+#define WATCHRESULT 900000 
 static int money;
 static int bet;
 static void writeResultForSlotShot();
 
 static int calculateScore();
-static int globalScore = 1;
+static int globalScore;
 
 void initTextures();
 GLuint images[9];
@@ -145,7 +145,6 @@ void postSlots(vector<int> &numImages){
         glEnd();
     }
 
-    bool t= false;
     if(numImages.size() == 6){
         /*drugi red treca kolona*/
         f6 = Fruits(numImages[5]);
@@ -167,6 +166,7 @@ void postSlots(vector<int> &numImages){
         glEnd();
 
         globalScore = calculateScore();
+        cout << globalScore << endl;
         writeResultForSlotShot();
     }
 
@@ -187,25 +187,82 @@ void postSlots(vector<int> &numImages){
 int calculateScore(){
 
     int score = 1;
-    /*Za svaku kombinaciju povecavamo dobitni skor*/
-    if ((f1 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f2 == f4 && f4 == f6 && Fruits::ananas))
-        score *= 5;
-    if ((f1 == f3 && f3 == f5 && f5 == Fruits::dolar) || (f2 == f4 && f4 == f6 && Fruits::dolar))
-        score *= 250;
-    if ((f1 == f3 && f3 == f5 && f5 == Fruits::e) || (f2 == f4 && f4 == f6 && Fruits::e))
-        score *= 500;
-    if ((f1 == f3 && f3 == f5 && f5 == Fruits::grozdje) || (f2 == f4 && f4 == f6 && Fruits::grozdje))
+    /*Horizontalno spajanje(horizontal payline)*/        
+    if ((f1 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f2 == f4 && f4 == f6 && f6 == Fruits::ananas)){
         score *= 10;
-    if ((f1 == f3 && f3 == f5 && f5 == Fruits::kockica) || (f2 == f4 && f4 == f6 && Fruits::kockica))
-        score *= 100;
-    if ((f1 == f3 && f3 == f5 && f5 == Fruits::limun) || (f2 == f4 && f4 == f6 && Fruits::limun))
-        score *= 15;
-    if ((f1 == f3 && f3 == f5 && f5 == Fruits::lubenica) || (f2 == f4 && f4 == f6 && Fruits::lubenica))
+        cout << "Ananas" << score << endl;
+    }
+    else if ((f1 == f3 && f3 == f5 && f5 == Fruits::dolar) || (f2 == f4 && f4 == f6 && f6 == Fruits::dolar)){
+        score *= 200;
+       cout << "Dolar" << score << endl;
+}
+    else if ((f1 == f3 && f3 == f5 && f5 == Fruits::e) || (f2 == f4 && f4 == f6 && f6 == Fruits::e)){
+        score *= 500;
+        cout << "E" << score << endl;
+    }
+    else if ((f1 == f3 && f3 == f5 && f5 == Fruits::grozdje) || (f2 == f4 && f4 == f6 && f6 == Fruits::grozdje)){
         score *= 20;
-    if ((f1 == f3 && f3 == f5 && f5 == Fruits::spin) || (f2 == f4 && f4 == f6 && Fruits::spin))
-        score *= 50;
-    if ((f1 == f3 && f3 == f5 && f5 == Fruits::tresnjice) || (f2 == f4 && f4 == f6 && Fruits::tresnjice))
+        cout << "Grozdje" << score << endl;
+    }
+    else if ((f1 == f3 && f3 == f5 && f5 == Fruits::kockica) || (f2 == f4 && f4 == f6 && f6 == Fruits::kockica)){
+        score *= 100;
+        cout << "Kockica" << score << endl;
+    }
+    else if ((f1 == f3 && f3 == f5 && f5 == Fruits::limun) || (f2 == f4 && f4 == f6 && f6 == Fruits::limun)){
+        score *= 15;
+        cout << "Limun" << score << endl;
+    }
+    else if ((f1 == f3 && f3 == f5 && f5 == Fruits::lubenica) || (f2 == f4 && f4 == f6 && f6 == Fruits::lubenica)){
         score *= 25;
+        cout << "Lubenica" << score << endl;
+    }
+    else if ((f1 == f3 && f3 == f5 && f5 == Fruits::spin) || (f2 == f4 && f4 == f6 && f6 == Fruits::spin)){
+        score *= 50;
+        cout << "Spin" << score << endl;
+    }
+    else if ((f1 == f3 && f3 == f5 && f5 == Fruits::tresnjice) || (f2 == f4 && f4 == f6 && f6 == Fruits::tresnjice)){
+        score *= 5;
+        cout << "Tresnjica" << score << endl;
+    }
+    /*Trougao spajanje:  - + -  ili  + - +
+                         + - +       - + -  gde su plus iste slicice*/
+    if ((f2 == f3 && f3 == f5 && f6 == Fruits::ananas) || (f1 == f4 && f4 == f5 && f5 == Fruits::ananas)){
+        score *= 10;
+        cout << "Ananas" << score << endl;
+    }
+    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::dolar) || (f1 == f4 && f4 == f5 && f5 == Fruits::dolar)){
+        score *= 200;
+        cout << "Dolar" << score << endl;
+    }
+    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::e) || (f1 == f4 && f4 == f5 && f5 == Fruits::e)){
+        score *= 500;
+        cout << "E" << score << endl;
+    }
+    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::grozdje) || (f1 == f4 && f4 == f5 && f5 == Fruits::grozdje)){
+        score *= 20;
+        cout << "Grozdje" << score << endl;
+    }
+    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::kockica) || (f1 == f4 && f4 == f5 && f5 == Fruits::kockica)){
+        score *= 100;
+        cout << "Kockica" << score << endl;
+    }
+    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::limun) || (f1 == f4 && f4 == f5 && f5 == Fruits::limun)){
+        score *= 15;
+        cout << "Limun" << score << endl;
+    }
+    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::lubenica) || (f1 == f4 && f4 == f5 && f5 == Fruits::lubenica)){
+        score *= 25;
+        cout << "Lubenica" << score << endl;
+    }
+    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::spin) || (f1 == f4 && f4 == f5 && f5 == Fruits::spin)){
+        score *= 50;
+        cout << "Spin" << score << endl;
+    }
+    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::tresnjice) || (f1 == f4 && f4 == f5 && f5 == Fruits::tresnjice)){
+        score *= 5;
+        cout << "Tresnjica" << score << endl;
+    }
+
 
     return score;
 }
@@ -239,7 +296,7 @@ void writeResultForSlotShot() {
     string s;
     
     if (globalScore == 1){
-        /*Score je nepromenje, znaci nista nismo dobili*/
+        /*Score je nepromenjen, znaci nista nismo dobili*/
         money -= bet;
         result = -bet;
         s = "Res: " + to_string(result);
@@ -248,10 +305,10 @@ void writeResultForSlotShot() {
         /*Dobitak*/
         money += bet*globalScore;
         result = bet*globalScore;
+        globalScore = 1;
         s = "Res: +" + to_string(result);
     }
 	
-    glColor3f(0.96,0.96,0.96);
     glRasterPos3f(2.75,4.75,3);
 
     for( char c : s ) {
