@@ -45,18 +45,6 @@ void lightInit(){
     glEnable(GL_COLOR_MATERIAL);
 }
 
-void drawCoordSystem(){
-    glColor3f(0.96, 0.96, 0.96);
-    glBegin(GL_LINES);
-        glVertex3d(0,0, 0);
-        glVertex3d(7,0,0);
-        glVertex3d(0,0, 0);
-        glVertex3d(0,7,0);
-        glVertex3d(0,0, 0);
-        glVertex3d(0,0,7);
-    glEnd();
-}
-
 void drawMan() {
     glScalef(0.8, 0.8, 1);
     glTranslatef(3.5,0,3.5);
@@ -177,22 +165,22 @@ void drawSlotMachine(bool shotTaster) {
     glTranslatef(3,0,0);
     glRotatef(-90, 0,1,0);
 
-    glPushMatrix();
+    glPushMatrix(); //POCETNI PUSH
 
     /*Ledja slot masine*/
     glColor3f(0,0,0);
     glPushMatrix();
-    glTranslatef(-0.5,3,0);
-    glScalef(1,6,3);
-    glutSolidCube(1);
+        glTranslatef(-0.5,3,0);
+        glScalef(1,6,3);
+        glutSolidCube(1);
     glPopMatrix();
 
     /*Srednji deo slot masine*/
     glColor3f(1,0.2,0.2);
     glPushMatrix();
-    glTranslatef(0, 3,0);
-    glScalef(1,20,10);
-    glutSolidCube(0.3);
+        glTranslatef(0, 3,0);
+        glScalef(1,20,10);
+        glutSolidCube(0.3);
     glPopMatrix();
 
     /*Moj pogled*/
@@ -201,7 +189,7 @@ void drawSlotMachine(bool shotTaster) {
     glPushMatrix();
         glTranslatef(0.15, 5, 0);
         glScalef(1.2,1,20);
-    glutSolidCube(0.1);
+        glutSolidCube(0.1);
     glPopMatrix();
 
     glPushMatrix();
@@ -240,82 +228,78 @@ void drawSlotMachine(bool shotTaster) {
 
     /*Dugmici*/
     glPushMatrix();
-    glTranslatef(0.3,3.0,0);
-    glRotatef(-15,0,0,1 );
-    glPushMatrix();
-    glColor3f(0,0,0);
+        glTranslatef(0.3,3.0,0);
+        glRotatef(-15,0,0,1 );
+        glPushMatrix();
+            glColor3f(0,0,0);
 
-    /*glTranslatef(0,0.10, 1);
-    glutSolidCube(0.35);
-    glTranslatef(0,-0.10, -1);
+            /*glTranslatef(0,0.10, 1);
+            glutSolidCube(0.35);
+            glTranslatef(0,-0.10, -1);
 
-    glTranslatef(0,0.15, 0.2);
-    glutSolidCube(0.3);
-    glTranslatef(0,-0.15, -0.2);
+            glTranslatef(0,0.15, 0.2);
+            glutSolidCube(0.3);
+            glTranslatef(0,-0.15, -0.2);
 
-    glTranslatef(0,0.20, -0.45);
-    glutSolidCube(0.25);
-    glTranslatef(0,-0.20, +0.45);
+            glTranslatef(0,0.20, -0.45);
+            glutSolidCube(0.25);
+            glTranslatef(0,-0.20, +0.45);
 
-    glTranslatef(0,0.25, -1.);
-    glutSolidCube(0.2);
-    glTranslatef(0,-0.25, +1.);*/
+            glTranslatef(0,0.25, -1.);
+            glutSolidCube(0.2);
+            glTranslatef(0,-0.25, +1.);*/
 
-    glColor3f(1,0,0);
-    glScalef(1,1,6);
-    glutSolidCube(0.5);
-    glPopMatrix();
-
-    glRotatef(15, 0,0,1);
-    glTranslatef(-0.3,-3.0,0);
+            glColor3f(1,0,0);
+            glScalef(1,1,6);
+            glutSolidCube(0.5);
+        glPopMatrix();
     glPopMatrix();
 
     /*Rucka*/
     glColor3f(0,1,0);
-
     glPushMatrix();
-    glTranslatef(-0.5,3,-1.7);
+        glTranslatef(-0.5,3,-1.7);
 
-    glRotatef(90,0,1,0);
-    if(shotTaster) {
-        glRotatef(180, 1, 0, 0);
-    }
-    else{
-        glRotatef(135, 1, 0, 0);
-    }
+        glRotatef(90,0,1,0);
+        if(shotTaster) {
+            glRotatef(180, 1, 0, 0);
+        }
+        else{
+            glRotatef(135, 1, 0, 0);
+        }
 
+        glTranslatef(0,0, -1.5);
+        glutSolidSphere(0.2,32,32);
 
-    glTranslatef(0,0, -1.5);
-    glutSolidSphere(0.2,32,32);
+        GLUquadricObj* rucka = gluNewQuadric();
+        glTranslatef(0,0,0.1);
+        gluCylinder(rucka, 0.1f,0.1f,1.5,32,32);
+        glTranslatef(0,0,-0.1);
 
-    GLUquadricObj* rucka = gluNewQuadric();
-    glTranslatef(0,0,0.1);
-    gluCylinder(rucka, 0.1f,0.1f,1.5,32,32);
-    glTranslatef(0,0,-0.1);
+        glTranslatef(0,0, 1.5);
+        if(shotTaster) {
+            glRotatef(-180, 1, 0, 0);
+        }
+        else{
+            glRotatef(-135, 1, 0, 0);
+        }
+        glRotatef(-90,0,1,0);
 
-    glTranslatef(0,0, 1.5);
-    if(shotTaster) {
-        glRotatef(-180, 1, 0, 0);
-    }
-    else{
-        glRotatef(-135, 1, 0, 0);
-    }
-    glRotatef(-90,0,1,0);
-
-    GLUquadricObj* postoljeRucke = gluNewQuadric();
-    GLUquadricObj* diskZaRucku = gluNewQuadric();
-    gluDisk(diskZaRucku, 0,0.32, 32,32);
-    gluCylinder(postoljeRucke, 0.2,0.25,0.15, 32,32);
+        GLUquadricObj* postoljeRucke = gluNewQuadric();
+        GLUquadricObj* diskZaRucku = gluNewQuadric();
+        gluDisk(diskZaRucku, 0,0.32, 32,32);
+        gluCylinder(postoljeRucke, 0.2,0.25,0.15, 32,32);
     glPopMatrix();
 
     drawTextures();
 
-    glPopMatrix();
+    glPopMatrix(); //POCETNI POP
 
     glRotatef(90, 0,1,0);
     glTranslatef(-3,0,0);
     glScalef(1,1/1.1,1);
 
+    glColor3f(0.96,0.96,0.96);
 }
 
 void drawTextures(){

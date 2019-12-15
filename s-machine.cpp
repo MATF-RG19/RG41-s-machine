@@ -49,19 +49,20 @@ int main(int argc, char **argv)
     glutReshapeFunc(on_reshape);
     glutDisplayFunc(on_display);
 
-    glClearColor(0.10, 0.10, 0.10, 0);
+    glClearColor(0.05, 0.05, 0.05, 0);
     glEnable(GL_DEPTH_TEST);
 
     srand(time(NULL));
 
-    engine = createIrrKlangDevice(); //kreiranje zvuka
-    engine->play2D("irrKlangLib/media/music.mp3", true); //pustanje zvuka
-    
     /*
     cout << "Unesite iznos vaseg novca" << endl;
     cin >> money;
     cout << "Unesite zeljeni BET. Moguce vrednosti [1, 5, 10, 50, 100]" << endl;
     cin >> bet;*/
+
+    engine = createIrrKlangDevice(); //kreiranje zvuka
+    //engine->play2D("irrKlangLib/media/music.mp3", true); //pustanje zvuka
+    
     money = 1000;
     bet = 10;
     setMoney(money);
@@ -81,7 +82,6 @@ void on_display() {
 
     gluLookAt(12.0-goCamX,8.0-goCamY,9.0-goCamZ+1,0+goCamY,2+goCamY,0, 0,1,0);
     
-    drawCoordSystem();
     lightInit();
     drawMan();
     drawSlotMachine(slotWorks);

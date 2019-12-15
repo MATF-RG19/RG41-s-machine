@@ -38,6 +38,21 @@ static int globalScore;
 void initTextures();
 GLuint images[9];
 
+//funkcije za iscrtavanje linije koja je spojila slicice
+static void writeHorizontalLine();
+static void writeTriangleLine();
+static void writeZigZagLine();
+
+void setMoney(int m){
+    money = m;
+}
+void setBet(int b){
+    bet = b;
+}
+
+int getMoney(){
+    return money;
+}
 
 void postSlots(vector<int> &numImages){
 
@@ -189,89 +204,116 @@ int calculateScore(){
     /*Horizontalno spajanje(horizontal payline)*/        
     if ((f1 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f2 == f4 && f4 == f6 && f6 == Fruits::ananas)){
         score *= 8;
+        writeHorizontalLine();
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::dolar) || (f2 == f4 && f4 == f6 && f6 == Fruits::dolar)){
         score *= 30;
-}
+        writeHorizontalLine();
+    }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::e) || (f2 == f4 && f4 == f6 && f6 == Fruits::e)){
         score *= 50;
+        writeHorizontalLine();
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::grozdje) || (f2 == f4 && f4 == f6 && f6 == Fruits::grozdje)){
         score *= 16;
+        writeHorizontalLine();
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::kockica) || (f2 == f4 && f4 == f6 && f6 == Fruits::kockica)){
         score *= 25;
+        writeHorizontalLine();
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::limun) || (f2 == f4 && f4 == f6 && f6 == Fruits::limun)){
         score *= 12;
+        writeHorizontalLine();
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::lubenica) || (f2 == f4 && f4 == f6 && f6 == Fruits::lubenica)){
         score *= 18;
+        writeHorizontalLine();
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::spin) || (f2 == f4 && f4 == f6 && f6 == Fruits::spin)){
         score *= 20;
+        writeHorizontalLine();
     }
     else if ((f1 == f3 && f3 == f5 && f5 == Fruits::tresnjice) || (f2 == f4 && f4 == f6 && f6 == Fruits::tresnjice)){
         score *= 5;
+        writeHorizontalLine();
     }
     /*Trougao spajanje:  - + -  ili  + - +
                          + - +       - + -  gde su plus iste slicice*/
-    else if ((f2 == f3 && f3 == f5 && f6 == Fruits::ananas) || (f1 == f4 && f4 == f5 && f5 == Fruits::ananas)){
+    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::ananas) || (f1 == f4 && f4 == f5 && f5 == Fruits::ananas)){
         score *= 8;
+        writeTriangleLine();
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::dolar) || (f1 == f4 && f4 == f5 && f5 == Fruits::dolar)){
         score *= 30;
-    }
+        writeTriangleLine();
+   }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::e) || (f1 == f4 && f4 == f5 && f5 == Fruits::e)){
         score *= 50;
+        writeTriangleLine();
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::grozdje) || (f1 == f4 && f4 == f5 && f5 == Fruits::grozdje)){
         score *= 16;
+        writeTriangleLine();
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::kockica) || (f1 == f4 && f4 == f5 && f5 == Fruits::kockica)){
         score *= 25;
+        writeTriangleLine();
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::limun) || (f1 == f4 && f4 == f5 && f5 == Fruits::limun)){
         score *= 15;
+        writeTriangleLine();
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::lubenica) || (f1 == f4 && f4 == f5 && f5 == Fruits::lubenica)){
         score *= 18;
+        writeTriangleLine();
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::spin) || (f1 == f4 && f4 == f5 && f5 == Fruits::spin)){
         score *= 20;
+        writeTriangleLine();
     }
     else if ((f2 == f3 && f3 == f6 && f6 == Fruits::tresnjice) || (f1 == f4 && f4 == f5 && f5 == Fruits::tresnjice)){
         score *= 5;
+        writeTriangleLine();
     }
 
     /*Spajanje: + - -  ili  - + +
                 - + +       + - -  */
     else if ((f2 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f1 == f4 && f4 == f6 && f6 == Fruits::ananas)){
         score *= 8;
+        writeZigZagLine();
     }
     else if ((f2 == f3 && f3 == f5 && f5 == Fruits::dolar) || (f1 == f4 && f4 == f6 && f6 == Fruits::dolar)){
         score *= 30;
+        writeZigZagLine();
     }
     else if ((f2 == f3 && f3 == f5 && f5 == Fruits::e) || (f1 == f4 && f4 == f6 && f6 == Fruits::e)){
         score *= 50;
+        writeZigZagLine();
     }
     else if ((f2 == f3 && f3 == f5 && f5 == Fruits::grozdje) || (f1 == f4 && f4 == f6 && f6 == Fruits::grozdje)){
         score *= 16;
+        writeZigZagLine();
     }
     else if ((f2 == f3 && f3 == f5 && f5 == Fruits::kockica) || (f1 == f4 && f4 == f6 && f6 == Fruits::kockica)){
         score *= 25;
+        writeZigZagLine();
     }
     else if ((f2 == f3 && f3 == f5 && f5 == Fruits::limun) || (f1 == f4 && f4 == f6 && f6 == Fruits::limun)){
         score *= 15;
+        writeZigZagLine();
     }
     else if ((f2 == f3 && f3 == f5 && f5 == Fruits::lubenica) || (f1 == f4 && f4 == f6 && f6 == Fruits::lubenica)){
         score *= 18;
+        writeZigZagLine();
     }
     else if ((f2 == f3 && f3 == f5 && f5 == Fruits::spin) || (f1 == f4 && f4 == f6 && f6 == Fruits::spin)){
         score *= 20;
+        writeZigZagLine();
     }
     else if ((f2 == f3 && f3 == f5 && f5 == Fruits::tresnjice) || (f1 == f4 && f4 == f6 && f6 == Fruits::tresnjice)){
         score *= 5;
+        writeZigZagLine();
     }
 
 
@@ -279,35 +321,118 @@ int calculateScore(){
                 + + -       - - +  */
     else if ((f1 == f3 && f3 == f6 && f6 == Fruits::ananas) || (f2 == f4 && f4 == f5 && f5 == Fruits::ananas)){
         score *= 8;
+        writeZigZagLine();
     }
     else if ((f1 == f3 && f3 == f6 && f6 == Fruits::dolar) || (f2 == f4 && f4 == f5 && f5 == Fruits::dolar)){
         score *= 30;
+        writeZigZagLine();
     }
     else if ((f1 == f3 && f3 == f6 && f6 == Fruits::e) || (f2 == f4 && f4 == f5 && f5 == Fruits::e)){
         score *= 50;
+        writeZigZagLine();
     }
     else if ((f1 == f3 && f3 == f6 && f6 == Fruits::grozdje) || (f2 == f4 && f4 == f5 && f5 == Fruits::grozdje)){
         score *= 16;
+        writeZigZagLine();
     }
     else if ((f1 == f3 && f3 == f6 && f6 == Fruits::kockica) || (f2 == f4 && f4 == f5 && f5 == Fruits::kockica)){
         score *= 25;
+        writeZigZagLine();
     }
     else if ((f1 == f3 && f3 == f6 && f6 == Fruits::limun) || (f2 == f4 && f4 == f5 && f5 == Fruits::limun)){
         score *= 15;
+        writeZigZagLine();
     }
     else if ((f1 == f3 && f3 == f6 && f6 == Fruits::lubenica) || (f2 == f4 && f4 == f5 && f5 == Fruits::lubenica)){
         score *= 18;
+        writeZigZagLine();
     }
     else if ((f1 == f3 && f3 == f6 && f6 == Fruits::spin) || (f2 == f4 && f4 == f5 && f5 == Fruits::spin)){
         score *= 20;
+        writeZigZagLine();
     }
     else if ((f1 == f3 && f3 == f6 && f6 == Fruits::tresnjice) || (f2 == f4 && f4 == f5 && f5 == Fruits::tresnjice)){
         score *= 5;
+        writeZigZagLine();
     }
 
     return score;
 }
 
+void writeHorizontalLine(){
+
+    glLineWidth(7);
+    if (f1==f3 && f3==f5){
+        glBegin(GL_LINES);
+            glVertex3f(2.49, 5.15, 1.1);
+            glVertex3f(3.52, 5.15, 1.1);
+        glEnd();
+    }
+    else {
+        glBegin(GL_LINES);
+            glVertex3f(2.49, 4.80, 1.1);
+            glVertex3f(3.52, 4.80, 1.1);
+        glEnd();
+    }
+}
+
+void writeTriangleLine(){
+    
+    glLineWidth(7);
+    if (f2==f3 && f3==f6){
+        glBegin(GL_LINES);
+            glVertex3f(2.49, 4.80, 1.1);
+            glVertex3f(3.0, 5.15, 1.1);
+            glVertex3f(3.0,5.15,1.1);
+            glVertex3f(3.52,4.80,1.1);
+        glEnd();
+    }
+    else{
+        glBegin(GL_LINES);
+            glVertex3f(2.49, 5.15, 1.1);
+            glVertex3f(3.0, 4.80, 1.1);
+            glVertex3f(3.0,4.80, 1.1);
+            glVertex3f(3.52, 5.15, 1.1);
+        glEnd();
+    }
+}
+
+void writeZigZagLine(){
+    
+    glLineWidth(7);
+    if(f1==f4 && f4==f6){
+        glBegin(GL_LINES);
+            glVertex3f(2.49, 5.15, 1.1);
+            glVertex3f(3.0, 4.80, 1.1);
+            glVertex3f(3.0, 4.80, 1.1);
+            glVertex3f(3.52, 4.80, 1.1);
+        glEnd();
+    }
+    else if(f2==f3 && f3==f5){
+        glBegin(GL_LINES);
+            glVertex3f(2.49, 4.80, 1.1);
+            glVertex3f(3.0, 5.15, 1.1);
+            glVertex3f(3.0, 5.15, 1.1);
+            glVertex3f(3.52, 5.15, 1.1);
+        glEnd();   
+    }
+    else if(f5==f4 && f4==f2){
+        glBegin(GL_LINES);
+            glVertex3f(2.49, 4.80, 1.1);
+            glVertex3f(3.0, 4.80, 1.1);
+            glVertex3f(3.0,4.80, 1.1);
+            glVertex3f(3.52, 5.15, 1.1);
+        glEnd();
+    }
+    else{
+        glBegin(GL_LINES);
+            glVertex3f(2.49, 5.15, 1.1);
+            glVertex3f(3.0, 5.15, 1.1);
+            glVertex3f(3.0, 5.15, 1.1);
+            glVertex3f(3.52, 4.80, 1.1);
+        glEnd();
+    }  
+}
 
 void writeMoney() {
 
@@ -352,21 +477,11 @@ void writeResultForSlotShot() {
     }
 	
     glRasterPos3f(2.75,4.75,3);
+    glColor3f(0.96,0.96,0.96);
 
     for( char c : s ) {
         glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
     }
-}
-
-void setMoney(int m){
-    money = m;
-}
-void setBet(int b){
-    bet = b;
-}
-
-int getMoney(){
-    return money;
 }
 
 void initTextures(){
