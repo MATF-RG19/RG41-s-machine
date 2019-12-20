@@ -58,10 +58,11 @@ int main(int argc, char **argv)
     cout << "Unesite iznos vaseg novca" << endl;
     cin >> money;
     cout << "Unesite zeljeni BET. Moguce vrednosti [1, 5, 10, 50, 100]" << endl;
-    cin >> bet;*/
+    cin >> bet;
+    */
 
     engine = createIrrKlangDevice(); //kreiranje zvuka
-    //engine->play2D("irrKlangLib/media/music.mp3", true); //pustanje zvuka
+    engine->play2D("irrKlangLib/media/music.mp3", true); //pustanje zvuka
     
     money = 1000;
     bet = 10;
@@ -79,13 +80,13 @@ void on_display() {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-
     gluLookAt(12.0-goCamX,8.0-goCamY,9.0-goCamZ+1,0+goCamY,2+goCamY,0, 0,1,0);
-    
+
     lightInit();
     drawMan();
     drawSlotMachine(slotWorks);
 
+    if(!programStarted) pressS();
     if(programStarted) writeMoney();
 
     if(slotWorks) postSlots(numImages);
@@ -100,12 +101,14 @@ void on_keyboard(unsigned char c , int x , int y) {
             engine->drop(); //oslobadjanje zvuka
             exit(0);
         case 's':
+        	/*Pokrecemo program, kamera se premesta u glavu igraca*/
             if (!timerActive) {
                 glutTimerFunc(10, on_timer, 0);
                 timerActive = true;
             }
             break;
         case 32:
+        	/*Na space pokrecemo slot masinu ali tek nakon sto je program pokrenut*/
             if(getMoney() < bet){
                 engine->drop();
                 exit(0);
@@ -119,6 +122,7 @@ void on_keyboard(unsigned char c , int x , int y) {
 
             break;
        case 'r':
+       		/*Podizemo novac, i jedino sto nam preostaje jeste da izadjemo iz igrice*/
        		setMoney(0);
        		slotWorks = false;
        		glutPostRedisplay();

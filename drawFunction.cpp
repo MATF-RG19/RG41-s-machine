@@ -1,6 +1,7 @@
-/*Nacin iscrtavanja tekstura je preuzet od asistenta Rastka Djordjevica*/
+/*Biblioteka za slike i nacin iscrtavanja tekstura preuzet je od asistenta Rastka Djordjevica*/
 
 #include <iostream>
+#include <string>
 #include <GL/glut.h>
 #include "drawFunction.hpp"
 #include "imageLib/image.h"
@@ -15,6 +16,7 @@ GLuint names[3];
 static void drawTextures();
 static void initTextures();
 
+static bool sStarted = false;
 
 void lightInit(){
     GLfloat light_ambient[] = { 0,0,0, 1 };
@@ -54,104 +56,104 @@ void drawMan() {
 
     /*Donji deo stolice*/
     glPushMatrix();
-    downChair = gluNewQuadric();
-    diskDownChair1 = gluNewQuadric();
-    diskDownChair2 = gluNewQuadric();
+		downChair = gluNewQuadric();
+		diskDownChair1 = gluNewQuadric();
+		diskDownChair2 = gluNewQuadric();
 
 
-    glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
-    gluDisk(diskDownChair1,0, 1.0f, 32, 32 );
-    glTranslatef(0,0,0.2);
-    gluDisk(diskDownChair2,0, 1.0f, 32, 32 );
-    glTranslatef(0,0,-0.2);
-    gluCylinder(downChair, 1.0f, 1.0f, 0.2f, 32, 32);
+		glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
+		gluDisk(diskDownChair1,0, 1.0f, 32, 32 );
+		glTranslatef(0,0,0.2);
+		gluDisk(diskDownChair2,0, 1.0f, 32, 32 );
+		glTranslatef(0,0,-0.2);
+		gluCylinder(downChair, 1.0f, 1.0f, 0.2f, 32, 32);
     glPopMatrix();
 
     /*Gornji deo stolice*/
     glPushMatrix();
-    upChair = gluNewQuadric();
-    diskUpChair1 = gluNewQuadric();
-    glTranslatef(0,3,0);
-    glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
-    gluDisk(diskUpChair1, 0,0.5f,32,32);
-    gluCylinder(upChair, 0.5f, 0.7f, 0.2f, 32, 32);
+		upChair = gluNewQuadric();
+		diskUpChair1 = gluNewQuadric();
+		glTranslatef(0,3,0);
+		glRotatef(270.0f, 1.0f, 0.0f, 0.0f);
+		gluDisk(diskUpChair1, 0,0.5f,32,32);
+		gluCylinder(upChair, 0.5f, 0.7f, 0.2f, 32, 32);
     glPopMatrix();
 
     /*Noga od stolice*/
     glPushMatrix();
-    glTranslatef(0,1.5,0);
-    glScalef(1,5,1);
-    glutSolidCube(0.6);
+		glTranslatef(0,1.5,0);
+		glScalef(1,5,1);
+		glutSolidCube(0.6);
     glPopMatrix();
 
     glColor3f(0,1,0);
 
     /*Telo coveka*/
     glPushMatrix();
-    glTranslatef(0,4.4,0);
-    glScalef(2,3,1);
-    glutSolidCube(0.8);
+		glTranslatef(0,4.4,0);
+		glScalef(2,3,1);
+		glutSolidCube(0.8);
     glPopMatrix();
 
     /*Glava coveka*/
     glPushMatrix();
-    glTranslatef(0,5.95,0);
-    glutSolidSphere(0.35, 32,32);
+		glTranslatef(0,5.95,0);
+		glutSolidSphere(0.35, 32,32);
     glPopMatrix();
 
 
     /*Desna noga*/
     glPushMatrix();
-    glTranslatef(0.6,3.4,-0.4);
-    glScalef(1,1,4);
-    glutSolidCube(0.4);
+		glTranslatef(0.6,3.4,-0.4);
+		glScalef(1,1,4);
+		glutSolidCube(0.4);
     glPopMatrix();
     /*Leva noga*/
     glPushMatrix();
-    glTranslatef(-0.6,3.4,-0.4);
-    glScalef(1,1,4);
-    glutSolidCube(0.4);
+		glTranslatef(-0.6,3.4,-0.4);
+		glScalef(1,1,4);
+		glutSolidCube(0.4);
     glPopMatrix();
 
     /*Desno potkolenica*/
     glPushMatrix();
-    glTranslatef(0.6,2.5,-1.4);
-    glRotatef(-270,1,0,0);
-    glScalef(1,1,5.5);
-    glutSolidCube(0.4);
+		glTranslatef(0.6,2.5,-1.4);
+		glRotatef(-270,1,0,0);
+		glScalef(1,1,5.5);
+		glutSolidCube(0.4);
     glPopMatrix();
 
     /*Leva potkolenica*/
     glPushMatrix();
-    glTranslatef(-0.6,2.5,-1.4);
-    glRotatef(-270,1,0,0);
-    glScalef(1,1,5.5);
-    glutSolidCube(0.4);
+		glTranslatef(-0.6,2.5,-1.4);
+		glRotatef(-270,1,0,0);
+		glScalef(1,1,5.5);
+		glutSolidCube(0.4);
     glPopMatrix();
 
     /*Desna ruka*/
     glColor3f(0,0.9,0);
-    glPushMatrix();
-    glTranslatef(1,4.8,0);
-    glRotatef(-270,1,0,0);
-    glScalef(1,1,4);
-    glutSolidCube(0.4);
+	glPushMatrix();
+		glTranslatef(1,4.8,0);
+		glRotatef(-270,1,0,0);
+		glScalef(1,1,4);
+		glutSolidCube(0.4);
     glPopMatrix();
     glPushMatrix();
-    glTranslatef(1,3.9,0);
-    glutSolidSphere(0.2,32,32);
+		glTranslatef(1,3.9,0);
+		glutSolidSphere(0.2,32,32);
     glPopMatrix();
 
     /*Leva ruka*/
     glPushMatrix();
-    glTranslatef(-1,4.8,0);
-    glRotatef(-270,1,0,0);
-    glScalef(1,1,4);
-    glutSolidCube(0.4);
-    glPopMatrix();
-    glPushMatrix();
-    glTranslatef(-1,3.9,0);
-    glutSolidSphere(0.2,32,32);
+		glTranslatef(-1,4.8,0);
+		glRotatef(-270,1,0,0);
+		glScalef(1,1,4);
+		glutSolidCube(0.4);
+		glPopMatrix();
+		glPushMatrix();
+		glTranslatef(-1,3.9,0);
+		glutSolidSphere(0.2,32,32);
     glPopMatrix();
 
     glTranslatef(-3.5,0,-3.5);
@@ -301,6 +303,24 @@ void drawSlotMachine(bool shotTaster) {
 
     glColor3f(0.96,0.96,0.96);
 }
+
+void pressS(){
+
+    if (sStarted)
+      return;
+
+    /*Omogucavamo da se samo u polaznom koraku natpis ukljucuje*/
+    sStarted = true;
+
+    string s = "Press S to START program";
+
+    glRasterPos3f(-6,-8,3);
+
+    for( char c : s ) {
+        glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
+    }
+}
+
 
 void drawTextures(){
     

@@ -4,5 +4,6 @@
 void drawMan();
 void drawSlotMachine(bool);
 void lightInit();
+void pressS();
 
 #endif //DRAWFUNCTION_HPP
