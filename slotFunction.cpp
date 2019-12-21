@@ -185,7 +185,8 @@ void postSlots(vector<int> &numImages){
     }
 
     if (numImages.size() == 7){
-        /*BITAN DEO!
+        /*
+        BITAN DEO!
         Svih 6 slicica kao i rezultat, postavljeno je vec u sestom koraku, ali se ceka
         naknadni glutPostRedisplay kako bi se sve iscrtalo, zato moramo da imamo sedmi korak
         koji pamti sve rezultate.
@@ -199,8 +200,10 @@ void postSlots(vector<int> &numImages){
 
 
 int calculateScore(){
-    /*Ovaj korak omogucava iscrtavanje rezultata i dobitnih linija onim bojama koje stoje u funciji,
-      a ne u random bojama*/
+    /*
+    Ovaj korak omogucava iscrtavanje rezultata i dobitnih linija onim bojama koje stoje u funciji,
+    a ne u random bojama
+    */
     glDisable(GL_TEXTURE_2D);
     
     int score = 1;

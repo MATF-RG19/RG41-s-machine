@@ -14,7 +14,10 @@ klonirati projekat na vas racunar sa komandom `git clone https://github.com/MATF
 pozicionirati se u direktorijum `RG41-s-machine`<br>
 pokrenuti Makefile `make`<br>
 pokrenuti program `./slotMachine`
+<br><br>
+ukoliko se muzika ne pusta, potrebno je fajl `ikpMP3.so` iz `./irrKlangLib/bin/linux-gcc-64` kopirati u polazeći direktorijum<br>
+ukoliko želimo da unesemo novac i bet, potrebno je otkomentarisati kod iz main funkcije `s-machine.cpp`
 
 ### ⚠️ napomena:
 biblioteka "irrKlangLib" za muziku preuzeta sa: `https://www.ambiera.com/irrklang/`<br>
-biblioteka "imageLib" za teksture preuzeta od asistenta Rastka Djordjevica `http://www.matf.bg.ac.rs/p/-rastko-djordjevic`
+biblioteka "imageLib" za teksture preuzeta od asistenta Rastka Đorđevića `http://www.matf.bg.ac.rs/p/-rastko-djordjevic`

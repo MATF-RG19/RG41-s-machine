@@ -59,6 +59,14 @@ int main(int argc, char **argv)
     cin >> money;
     cout << "Unesite zeljeni BET. Moguce vrednosti [1, 5, 10, 50, 100]" << endl;
     cin >> bet;
+    if (bet != 1 && bet != 5 && bet != 10 && bet != 50 && bet != 100){
+        cout << "Nedozvoljene vrednosti za BET" << endl;
+        exit(EXIT_FAILURE);
+    }
+    setMoney(money);
+    setBet(bet);
+
+    obrisati linije 71-74 da bi program mogao da se prevede
     */
 
     engine = createIrrKlangDevice(); //kreiranje zvuka
