@@ -199,7 +199,10 @@ void postSlots(vector<int> &numImages){
 
 
 int calculateScore(){
-
+    /*Ovaj korak omogucava iscrtavanje rezultata i dobitnih linija onim bojama koje stoje u funciji,
+      a ne u random bojama*/
+    glDisable(GL_TEXTURE_2D);
+    
     int score = 1;
     /*Horizontalno spajanje(horizontal payline)*/        
     if ((f1 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f2 == f4 && f4 == f6 && f6 == Fruits::ananas)){
@@ -362,7 +365,7 @@ int calculateScore(){
 void writeHorizontalLine(){
 	
 	glColor3f(0,0,0);
-    glLineWidth(7);
+    glLineWidth(5);
     if (f1==f3 && f3==f5){
         glBegin(GL_LINES);
             glVertex3f(2.49, 5.15, 1.1);
@@ -380,7 +383,7 @@ void writeHorizontalLine(){
 void writeTriangleLine(){
     
     glColor3f(0,0,0);
-    glLineWidth(7);
+    glLineWidth(5);
     if (f2==f3 && f3==f6){
         glBegin(GL_LINES);
             glVertex3f(2.49, 4.80, 1.1);
@@ -402,7 +405,7 @@ void writeTriangleLine(){
 void writeZigZagLine(){
     
     glColor3f(0,0,0);
-    glLineWidth(7);
+    glLineWidth(5);
     if(f1==f4 && f4==f6){
         glBegin(GL_LINES);
             glVertex3f(2.49, 5.15, 1.1);
@@ -440,15 +443,13 @@ void writeZigZagLine(){
 void writeMoney() {
 
     string s = "Money = " + to_string(money);
-	
-    glColor3f(0.96,0.96,0.96);
+
     glRasterPos3f(3,4.75,3);
     
     for( char c : s ) {
         glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
     }
 
-    glColor3f(0.96,0.96,0.96);
     glRasterPos3f(3.1, 4.7, 3);
     
     string s1 = "BET = " + to_string(bet);
@@ -478,7 +479,8 @@ void writeResultForSlotShot() {
         globalScore = 1;
         s = "Res: +" + to_string(result);
     }
-
+    
+    glColor3f(0.96, 0.96,0.96);
     glRasterPos3f(2.75,4.75,3);
 
     for( char c : s ) {
@@ -486,10 +488,9 @@ void writeResultForSlotShot() {
     }
 }
 
+
 void initTextures(){
     Image * image;
-
-    glEnable(GL_DEPTH_TEST);
 
     glEnable(GL_TEXTURE_2D);
 

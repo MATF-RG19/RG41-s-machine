@@ -88,7 +88,6 @@ void on_display() {
 
     if(!programStarted) pressS();
     if(programStarted) writeMoney();
-
     if(slotWorks) postSlots(numImages);
 
     glutSwapBuffers();
