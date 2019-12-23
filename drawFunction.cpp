@@ -304,14 +304,25 @@ void pressS(){
     sStarted = true;
 
     string s = "Press S to START program";
-
-    glColor3f(1,0,0);
+    
     glRasterPos3f(-6,-8,3);
 
     for( char c : s ) {
       glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
     }
 
+}
+
+void pressSpace(){
+    string s = "P R E S S   S P A C E";
+
+    glColor3f(0.5,0,0);
+    glRasterPos3f(2.8,4.5,3);
+    
+    for( char c : s ) {
+      glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
+    }
+    glColor3f(0.96,0.96,0.96);
 }
 
 

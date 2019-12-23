@@ -246,7 +246,7 @@ int calculateScore(){
     }
     /*Trougao spajanje:  - + -  ili  + - +
                          + - +       - + -  gde su plus iste slicice*/
-    else if ((f2 == f3 && f3 == f6 && f6 == Fruits::ananas) || (f1 == f4 && f4 == f5 && f5 == Fruits::ananas)){
+    if ((f2 == f3 && f3 == f6 && f6 == Fruits::ananas) || (f1 == f4 && f4 == f5 && f5 == Fruits::ananas)){
         score *= 3;
         writeTriangleLine();
     }
@@ -285,7 +285,7 @@ int calculateScore(){
 
     /*Spajanje: + - -  ili  - + +
                 - + +       + - -  */
-    else if ((f2 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f1 == f4 && f4 == f6 && f6 == Fruits::ananas)){
+    if ((f2 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f1 == f4 && f4 == f6 && f6 == Fruits::ananas)){
         score *= 3;
         writeZigZagLine();
     }
@@ -325,7 +325,7 @@ int calculateScore(){
 
     /*Spajanje: - - +  ili  + + -
                 + + -       - - +  */
-    else if ((f1 == f3 && f3 == f6 && f6 == Fruits::ananas) || (f2 == f4 && f4 == f5 && f5 == Fruits::ananas)){
+     if ((f1 == f3 && f3 == f6 && f6 == Fruits::ananas) || (f2 == f4 && f4 == f5 && f5 == Fruits::ananas)){
         score *= 3;
         writeZigZagLine();
     }
@@ -367,7 +367,7 @@ int calculateScore(){
 
 void writeHorizontalLine(){
 	
-	glColor3f(0,0,0);
+	glColor3f(0.2,0,0);
     glLineWidth(5);
     if (f1==f3 && f3==f5){
         glBegin(GL_LINES);
@@ -385,7 +385,7 @@ void writeHorizontalLine(){
 
 void writeTriangleLine(){
     
-    glColor3f(0,0,0);
+    glColor3f(0.2,0,0);
     glLineWidth(5);
     if (f2==f3 && f3==f6){
         glBegin(GL_LINES);
@@ -407,7 +407,7 @@ void writeTriangleLine(){
 
 void writeZigZagLine(){
     
-    glColor3f(0,0,0);
+    glColor3f(0.2,0,0);
     glLineWidth(5);
     if(f1==f4 && f4==f6){
         glBegin(GL_LINES);
@@ -447,12 +447,14 @@ void writeMoney() {
 
     string s = "Money = " + to_string(money);
 
+    glColor3f(0.96,0.96,0.96);
     glRasterPos3f(3,4.75,3);
     
     for( char c : s ) {
         glutBitmapCharacter( GLUT_BITMAP_TIMES_ROMAN_24, c );
     }
 
+    glColor3f(0.96,0.96,0.96);
     glRasterPos3f(3.1, 4.7, 3);
     
     string s1 = "BET = " + to_string(bet);
