@@ -66,7 +66,7 @@ int main(int argc, char **argv)
     setMoney(money);
     setBet(bet);
 
-    obrisati linije 71-74 da bi program mogao da se prevede
+    obrisati linije 75-78 da bi program mogao da se prevede
     */
 
     engine = createIrrKlangDevice(); //kreiranje zvuka
