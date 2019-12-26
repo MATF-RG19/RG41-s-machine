@@ -18,7 +18,7 @@ pozicionirati se u direktorijum `RG41-s-machine`<br>
 pokrenuti Makefile `make`<br>
 pokrenuti program `./slotMachine`<br>
 <br>
-ukoliko se muzika ne pusta, potrebno je fajl `ikpMP3.so` iz `./irrKlangLib/bin/linux-gcc-64` kopirati u polazeći direktorijum<br>
+ukoliko se muzika ne pusta, potrebno je fajl `ikpMP3.so` iz `./irrKlangLib/bin/linux-gcc-64` kopirati u polazni direktorijum<br>
 ukoliko želimo da unesemo novac i bet, potrebno je otkomentarisati kod iz main() funkcije `s-machine.cpp`
 
 ### ⚠️ napomena:

@@ -207,6 +207,7 @@ int calculateScore(){
     glDisable(GL_TEXTURE_2D);
     
     int score = 1;
+    
     /*Horizontalno spajanje(horizontal payline)*/        
     if ((f1 == f3 && f3 == f5 && f5 == Fruits::ananas) || (f2 == f4 && f4 == f6 && f6 == Fruits::ananas)){
         score *= 3;
@@ -244,8 +245,9 @@ int calculateScore(){
         score *= 2;
         writeHorizontalLine();
     }
+    
     /*Trougao spajanje:  - + -  ili  + - +
-                         + - +       - + -  gde su plus iste slicice*/
+                         + - +       - + -  gde su plusevi dobitne kombinacije*/
     if ((f2 == f3 && f3 == f6 && f6 == Fruits::ananas) || (f1 == f4 && f4 == f5 && f5 == Fruits::ananas)){
         score *= 3;
         writeTriangleLine();
@@ -478,7 +480,6 @@ void writeResultForSlotShot() {
     }
     else{
         /*Dobitak*/
-        money -= bet;
         money += bet*globalScore;
         result = bet*globalScore;
         globalScore = 1;
